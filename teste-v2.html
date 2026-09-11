@@ -7,44 +7,260 @@
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" href="/assets/logo.webp">
 <style>
-:root{--bg:#020711;--bg2:#061426;--panel:#081b31;--gold:#d8b86c;--gold2:#f5dda1;--text:#f8fafc;--muted:#aeb9c8;--line:rgba(216,184,108,.20);--line2:rgba(255,255,255,.08);--shadow:0 28px 80px rgba(0,0,0,.35)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 82% 4%,rgba(216,184,108,.14),transparent 24%),linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);background-size:auto,46px 46px,46px 46px;mask-image:linear-gradient(to bottom,#000,transparent 70%)}
-a{color:inherit;text-decoration:none}img{max-width:100%;display:block}.container{width:min(1200px,calc(100% - 38px));margin:auto}.previewbar{position:relative;z-index:80;background:linear-gradient(90deg,#b58b3f,var(--gold2),#b58b3f);color:#07111f;text-align:center;padding:8px 12px;font-size:11px;font-weight:950;letter-spacing:.12em}.site-header{position:sticky;top:0;z-index:70;background:rgba(2,7,17,.90);backdrop-filter:blur(18px);border-bottom:1px solid var(--line2)}.nav{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-weight:950}.brand img{width:58px;height:58px;object-fit:contain}.nav-links{display:flex;align-items:center;gap:18px;font-size:12px;font-weight:850}.nav-links a{opacity:.9}.nav-links a:hover{opacity:1;color:var(--gold2)}.nav-social{display:inline-flex;align-items:center;gap:7px}.nav-social svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}.nav-cta{padding:11px 16px;border-radius:12px;background:linear-gradient(135deg,var(--gold2),#b58b3f);color:#07111f!important;box-shadow:0 8px 24px rgba(216,184,108,.16)}.menu-btn{display:none;background:transparent;color:#fff;border:1px solid var(--line);border-radius:11px;padding:8px 11px;font-size:20px;cursor:pointer}
-.hero{position:relative;padding:80px 0 58px}.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:54px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:rgba(216,184,108,.055);border-radius:999px;padding:8px 12px;color:var(--gold2);font-size:10px;font-weight:950;letter-spacing:.15em;text-transform:uppercase}.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--gold2);box-shadow:0 0 18px var(--gold2)}h1,h2,h3{margin-top:0;line-height:1.04}h1{font-size:clamp(48px,7vw,82px);letter-spacing:-.055em;margin:20px 0 22px;max-width:760px}h1 span{display:block;color:var(--gold2)}h2{font-size:clamp(32px,4.4vw,52px);letter-spacing:-.035em;margin-bottom:16px}h3{font-size:19px;margin-bottom:8px}.lead{font-size:18px;color:#c7d0dc;max-width:700px}.hero-actions,.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:27px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 20px;border-radius:13px;font-size:13px;font-weight:950;border:1px solid transparent;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn-primary{background:linear-gradient(135deg,var(--gold2),#b58b3f);color:#07111f;box-shadow:0 12px 30px rgba(216,184,108,.18)}.btn-secondary{border-color:var(--line);background:rgba(255,255,255,.025)}.hero-points{display:flex;gap:18px;flex-wrap:wrap;margin-top:23px;color:#bac5d3;font-size:12px}.hero-points span:before{content:"✓";color:var(--gold2);font-weight:950;margin-right:7px}.hero-visual{position:relative;min-height:590px}.hero-photo{position:absolute;inset:0 0 0 44px;border-radius:30px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#081426}.hero-photo img{width:100%;height:100%;object-fit:cover}.hero-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,7,17,.04) 30%,rgba(2,7,17,.82))}.floating-card{position:absolute;z-index:4;border:1px solid rgba(216,184,108,.28);background:rgba(4,14,27,.88);backdrop-filter:blur(14px);box-shadow:0 18px 45px rgba(0,0,0,.30);border-radius:18px;padding:17px 18px}.floating-card strong{display:block;font-size:14px}.floating-card span{display:block;color:#bdc7d4;font-size:11px;margin-top:4px}.fc-top{top:34px;left:0;max-width:220px}.fc-bottom{right:-20px;bottom:36px;max-width:245px}.flow{position:absolute;z-index:4;left:78px;bottom:34px;display:flex;gap:7px;align-items:center}.flow b{font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:7px 9px;border-radius:999px;background:rgba(2,7,17,.84);border:1px solid var(--line)}.flow em{color:var(--gold2);font-style:normal}
-.trust{padding:2px 0 48px}.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.trust-item{position:relative;padding:20px;border:1px solid var(--line2);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));overflow:hidden}.trust-item:before{content:"";position:absolute;inset:0 auto 0 0;width:2px;background:linear-gradient(var(--gold2),transparent)}.trust-item b{display:block;color:var(--gold2);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}.trust-item strong{display:block;font-size:14px}.trust-item span{display:block;color:var(--muted);font-size:11px;margin-top:4px}
-.section{padding:88px 0}.alt{background:linear-gradient(180deg,rgba(7,23,43,.84),rgba(2,8,20,.78));border-block:1px solid rgba(255,255,255,.05)}.section-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:34px}.section-head>div{max-width:700px}.section-head p{max-width:520px;color:var(--muted);margin:0}.kicker{color:var(--gold2);font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.15em;margin-bottom:10px}.services{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.service{position:relative;min-height:290px;padding:26px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(11,35,64,.88),rgba(4,18,37,.96));overflow:hidden;transition:.22s}.service:hover{transform:translateY(-5px);border-color:rgba(240,217,149,.45);box-shadow:0 20px 50px rgba(0,0,0,.22)}.service:after{content:"";position:absolute;width:130px;height:130px;border-radius:50%;right:-45px;top:-48px;background:radial-gradient(circle,rgba(216,184,108,.16),transparent 68%)}.service-icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--line);background:rgba(216,184,108,.07);color:var(--gold2);font-size:20px;margin-bottom:28px}.service small{display:block;color:var(--gold2);font-size:9px;font-weight:950;letter-spacing:.13em;margin-bottom:8px}.service p{color:var(--muted);font-size:13px;margin:0}.service .arrow{position:absolute;bottom:23px;right:24px;color:var(--gold2);font-weight:950}
-.signature{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}.signature-card{padding:28px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(145deg,#0b2542,#041326);position:relative;overflow:hidden}.signature-card:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-70px;bottom:-90px;background:radial-gradient(circle,rgba(216,184,108,.16),transparent 70%)}.signature-card b{display:block;color:var(--gold2);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}.signature-card h3{font-size:24px}.signature-card p{color:var(--muted);font-size:13px}
-.showcase{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}.showcase-main,.showcase-side>a{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);min-height:520px}.showcase-side{display:grid;gap:16px}.showcase-side>a{min-height:252px}.showcase img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:.35s}.showcase a:hover img{transform:scale(1.035)}.shade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(2,7,17,.92))}.caption{position:absolute;z-index:3;left:24px;right:24px;bottom:22px}.caption small{color:var(--gold2);font-weight:950;letter-spacing:.12em}.caption strong{display:block;font-size:22px;margin-top:5px}.caption span{display:block;color:#c3cbd5;font-size:12px;margin-top:4px}
-.why{display:grid;grid-template-columns:.88fr 1.12fr;gap:40px;align-items:center}.brand-stage{position:relative;min-height:450px;border-radius:28px;border:1px solid var(--line);background:radial-gradient(circle at 50% 35%,rgba(216,184,108,.16),transparent 34%),linear-gradient(145deg,#0b203b,#031126);display:grid;place-items:center;overflow:hidden}.brand-stage:before,.brand-stage:after{content:"";position:absolute;border:1px solid rgba(216,184,108,.11);border-radius:50%}.brand-stage:before{width:380px;height:380px}.brand-stage:after{width:270px;height:270px}.brand-stage img{position:relative;z-index:2;width:min(65%,310px);filter:drop-shadow(0 26px 50px rgba(0,0,0,.45))}.benefits{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}.benefit{padding:18px;border:1px solid var(--line2);border-radius:16px;background:rgba(255,255,255,.02)}.benefit b{display:block;font-size:13px}.benefit span{display:block;color:var(--muted);font-size:11px;margin-top:4px}
-.process{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}.process:before{content:"";position:absolute;left:6%;right:6%;top:25px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold),transparent);opacity:.35}.step{position:relative;z-index:2;padding:26px 22px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#07192e,#04101f)}.step b{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:#08192e;border:1px solid var(--line);color:var(--gold2);font-size:12px;margin-bottom:22px;box-shadow:0 0 0 8px var(--bg2)}.step p{font-size:12px;color:var(--muted);margin-bottom:0}
-.insta-wrap{display:grid;grid-template-columns:.76fr 1.24fr;gap:30px;align-items:center}.insta-card{padding:32px;border-radius:26px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(145deg,rgba(131,58,180,.16),rgba(253,29,29,.08),rgba(252,176,69,.08));position:relative;overflow:hidden}.insta-card:after{content:"@mn_engenhariacivil";position:absolute;right:-18px;bottom:12px;font-size:42px;font-weight:950;color:rgba(255,255,255,.035);white-space:nowrap}.insta-icon{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);margin-bottom:22px;box-shadow:0 14px 34px rgba(131,58,180,.26)}.insta-icon svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:1.8}.insta-card p{color:#c8d1dd}.insta-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.insta-tile{position:relative;min-height:260px;border-radius:20px;overflow:hidden;border:1px solid var(--line2);background:#061426}.insta-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:.35s}.insta-tile:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(2,7,17,.84))}.insta-tile:hover img{transform:scale(1.04)}.insta-tile span{position:absolute;z-index:2;left:16px;bottom:14px;font-size:11px;font-weight:900}
-.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:36px;align-items:start}.faq{display:grid;gap:10px}.faq details{border:1px solid var(--line);border-radius:17px;background:#06162a;padding:18px 20px}.faq summary{font-weight:900;cursor:pointer}.faq p{color:var(--muted);font-size:13px;margin-bottom:0}
-.cta{padding:0 0 92px}.cta-box{position:relative;overflow:hidden;padding:48px;border:1px solid rgba(216,184,108,.34);border-radius:28px;background:linear-gradient(120deg,#0c2949,#041326);display:flex;align-items:center;justify-content:space-between;gap:28px;box-shadow:0 24px 70px rgba(0,0,0,.28)}.cta-box:after{content:"MN";position:absolute;right:2%;top:-40px;font-size:190px;line-height:1;font-weight:950;color:rgba(216,184,108,.045);letter-spacing:-.08em}.cta-box>div,.cta-box>a{position:relative;z-index:2}.cta-box p{color:#c6cfdb;max-width:650px;margin-bottom:0}.site-footer{padding:38px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:11px}.footer-grid{display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap}.footer-links{display:flex;gap:14px;flex-wrap:wrap}
-.social-floats{position:fixed;right:18px;bottom:18px;z-index:95;display:flex;flex-direction:column;gap:12px}.social-float{position:relative;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;box-shadow:0 14px 34px rgba(0,0,0,.38);transition:transform .2s ease,box-shadow .2s ease}.social-float:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 18px 40px rgba(0,0,0,.45)}.social-float svg{width:27px;height:27px}.social-float .tip{position:absolute;right:68px;white-space:nowrap;background:#07182c;border:1px solid var(--line);padding:7px 10px;border-radius:9px;color:#fff;font-size:11px;font-weight:850;opacity:0;transform:translateX(5px);pointer-events:none;transition:.2s}.social-float:hover .tip{opacity:1;transform:none}.float-instagram{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff}.float-instagram svg{fill:none;stroke:#fff;stroke-width:1.9}.float-whatsapp{background:#25d366;color:#fff;border:1px solid rgba(255,255,255,.28)}.float-whatsapp svg{fill:#fff}
-.reveal{opacity:0;transform:translateY(18px);transition:.55s ease}.reveal.show{opacity:1;transform:none}
-@media(max-width:980px){.nav-links{display:none;position:absolute;top:84px;left:18px;right:18px;flex-direction:column;align-items:stretch;padding:18px;background:#06152a;border:1px solid var(--line);border-radius:15px;box-shadow:0 20px 50px rgba(0,0,0,.45)}.nav-links.open{display:flex}.menu-btn{display:block}.hero-grid,.why,.faq-grid,.insta-wrap{grid-template-columns:1fr}.hero-visual{min-height:500px;margin-top:8px}.hero-photo{left:28px}.services{grid-template-columns:1fr 1fr}.showcase{grid-template-columns:1fr}.showcase-main{min-height:440px}.showcase-side{grid-template-columns:1fr 1fr}.showcase-side>a{min-height:300px}.trust-grid{grid-template-columns:1fr 1fr}.process{grid-template-columns:1fr 1fr}.process:before{display:none}.section-head{align-items:flex-start;flex-direction:column}}
-@media(max-width:650px){.container{width:min(1200px,calc(100% - 26px))}.previewbar{font-size:9px}.brand img{width:49px;height:49px}.nav{min-height:72px}.nav-links{top:72px}.hero{padding-top:48px}h1{font-size:46px}.lead{font-size:16px}.hero-actions .btn,.actions .btn,.cta-box .btn{width:100%}.hero-visual{min-height:420px}.hero-photo{left:0}.fc-top{top:16px;left:-2px}.fc-bottom{right:-2px;bottom:18px}.flow{display:none}.trust-grid,.services,.benefits,.process,.showcase-side,.signature,.insta-gallery{grid-template-columns:1fr}.section{padding:62px 0}.showcase-main,.showcase-side>a{min-height:310px}.brand-stage{min-height:330px}.cta-box{padding:30px 22px;flex-direction:column;align-items:flex-start}.social-floats{right:14px;bottom:14px;gap:10px}.social-float{width:52px;height:52px}.social-float svg{width:25px;height:25px}.social-float .tip{display:none}}
+:root{
+  --bg:#020711;--bg2:#061426;--panel:#081b31;--panel2:#0b2340;
+  --gold:#d8b86c;--gold2:#f5dda1;--text:#f8fafc;--muted:#aeb9c8;
+  --line:rgba(216,184,108,.22);--line2:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:
+radial-gradient(circle at 80% 0%,rgba(216,184,108,.14),transparent 25%),
+linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);
+background-size:auto,48px 48px,48px 48px;mask-image:linear-gradient(to bottom,#000,transparent 70%)}
+a{color:inherit;text-decoration:none} img{display:block;max-width:100%}
+.container{width:min(1200px,calc(100% - 36px));margin:auto}
+.previewbar{position:relative;z-index:100;background:linear-gradient(90deg,#b98d3d,var(--gold2),#b98d3d);color:#07111f;text-align:center;padding:8px 12px;font-size:10px;font-weight:950;letter-spacing:.13em}
+header{position:sticky;top:0;z-index:90;background:rgba(2,7,17,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line2)}
+.nav{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:950}.brand img{width:56px;height:56px;object-fit:contain}
+.navlinks{display:flex;align-items:center;gap:20px;font-size:12px;font-weight:850}.navlinks a{opacity:.9}.navlinks a:hover{color:var(--gold2)}
+.navcta{padding:11px 16px;border-radius:12px;background:linear-gradient(135deg,var(--gold2),#b58b3f);color:#07111f!important}
+.menu{display:none;background:transparent;color:#fff;border:1px solid var(--line);border-radius:11px;padding:8px 11px;font-size:20px}
+.hero{padding:76px 0 58px}.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:54px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid var(--line);border-radius:999px;color:var(--gold2);font-size:10px;font-weight:950;letter-spacing:.14em;text-transform:uppercase;background:rgba(216,184,108,.055)}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--gold2);box-shadow:0 0 16px var(--gold2)}
+h1,h2,h3{line-height:1.05;margin-top:0} h1{font-size:clamp(48px,6.8vw,82px);letter-spacing:-.055em;margin:20px 0 20px}
+h1 span{display:block;color:var(--gold2)} h2{font-size:clamp(32px,4.4vw,52px);letter-spacing:-.035em;margin-bottom:14px}
+.lead{font-size:18px;color:#c7d0dc;max-width:690px}.actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 20px;border-radius:13px;font-size:13px;font-weight:950;border:1px solid transparent;transition:.2s}
+.btn:hover{transform:translateY(-2px)}.btn-primary{background:linear-gradient(135deg,var(--gold2),#b58b3f);color:#07111f;box-shadow:0 12px 30px rgba(216,184,108,.18)}
+.btn-secondary{border-color:var(--line);background:rgba(255,255,255,.025)}
+.hero-points{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;color:#bac5d3;font-size:12px}.hero-points span:before{content:"✓";color:var(--gold2);font-weight:950;margin-right:7px}
+.hero-visual{position:relative;min-height:600px}.hero-photo{position:absolute;inset:0 0 0 32px;border-radius:30px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.38);background:#07182b}
+.hero-photo img{width:100%;height:100%;object-fit:cover}.hero-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,7,17,.02) 42%,rgba(2,7,17,.72))}
+.float-card{position:absolute;z-index:4;padding:17px 18px;border-radius:18px;border:1px solid rgba(216,184,108,.28);background:rgba(4,14,27,.88);backdrop-filter:blur(14px);box-shadow:0 18px 45px rgba(0,0,0,.30);max-width:245px}
+.float-card strong{display:block;font-size:14px}.float-card span{display:block;color:#bdc7d4;font-size:11px;margin-top:4px}.fc1{top:28px;left:0}.fc2{right:-14px;bottom:30px}
+.trust{padding:0 0 52px}.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.trust-item{padding:20px;border:1px solid var(--line2);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012))}
+.trust-item b{display:block;color:var(--gold2);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}.trust-item strong{font-size:14px;display:block}.trust-item span{color:var(--muted);font-size:11px;display:block;margin-top:4px}
+.section{padding:88px 0}.alt{background:linear-gradient(180deg,rgba(7,23,43,.84),rgba(2,8,20,.78));border-block:1px solid rgba(255,255,255,.05)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:34px}.section-head>div{max-width:690px}.section-head p{max-width:520px;color:var(--muted);margin:0}
+.kicker{color:var(--gold2);font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.15em;margin-bottom:10px}
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.service{padding:25px;border:1px solid var(--line);border-radius:21px;background:linear-gradient(145deg,rgba(11,35,64,.88),rgba(4,18,37,.96));min-height:245px;position:relative;overflow:hidden;transition:.22s}
+.service:hover{transform:translateY(-5px);border-color:rgba(245,221,161,.45);box-shadow:0 22px 52px rgba(0,0,0,.22)}.service .n{color:var(--gold2);font-size:10px;font-weight:950;letter-spacing:.14em}.service h3{font-size:20px;margin:32px 0 9px}.service p{color:var(--muted);font-size:12px;margin:0}
+.portfolio{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.project-card{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(145deg,#0b2542,#041326);box-shadow:0 18px 50px rgba(0,0,0,.22);transition:.25s}
+.project-card:hover{transform:translateY(-6px);box-shadow:0 28px 70px rgba(0,0,0,.30);border-color:rgba(245,221,161,.42)}
+.project-image{position:relative;aspect-ratio:4/3;overflow:hidden;background:#fff;cursor:zoom-in}.project-image img{width:100%;height:100%;object-fit:cover;transition:.35s}.project-card:hover .project-image img{transform:scale(1.025)}
+.project-image:after{content:"AMPLIAR";position:absolute;right:14px;bottom:14px;padding:7px 10px;border-radius:999px;background:rgba(2,7,17,.82);border:1px solid rgba(255,255,255,.18);font-size:9px;font-weight:950;letter-spacing:.12em}
+.project-body{padding:24px}.project-body small{color:var(--gold2);font-weight:950;letter-spacing:.13em;font-size:9px}.project-body h3{font-size:23px;margin:8px 0 9px}.project-body p{color:var(--muted);font-size:13px;margin:0 0 18px}
+.project-tags{display:flex;gap:7px;flex-wrap:wrap}.project-tags span{font-size:9px;padding:6px 9px;border-radius:999px;border:1px solid var(--line);color:#ccd5df;background:rgba(255,255,255,.02)}
+.note{margin-top:20px;padding:15px 17px;border:1px solid var(--line2);border-radius:14px;color:#9fabb9;font-size:11px;background:rgba(255,255,255,.02)}
+.why{display:grid;grid-template-columns:.86fr 1.14fr;gap:40px;align-items:center}.brand-stage{min-height:420px;border:1px solid var(--line);border-radius:28px;background:radial-gradient(circle at 50% 35%,rgba(216,184,108,.16),transparent 34%),linear-gradient(145deg,#0b203b,#031126);display:grid;place-items:center;position:relative;overflow:hidden}
+.brand-stage img{width:min(62%,300px);filter:drop-shadow(0 26px 50px rgba(0,0,0,.45))}.benefits{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}.benefit{padding:18px;border:1px solid var(--line2);border-radius:16px;background:rgba(255,255,255,.02)}
+.benefit b{display:block;font-size:13px}.benefit span{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px}.step{padding:24px 21px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#07192e,#04101f)}.step b{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);color:var(--gold2);font-size:11px;margin-bottom:18px}.step h3{font-size:17px;margin-bottom:8px}.step p{font-size:12px;color:var(--muted);margin:0}
+.insta{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:center}.insta-card{padding:32px;border-radius:26px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(145deg,rgba(131,58,180,.16),rgba(253,29,29,.08),rgba(252,176,69,.08))}
+.insta-card p{color:#c8d1dd}.insta-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.insta-gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:18px;border:1px solid var(--line2)}
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:34px}.faq-list{display:grid;gap:10px}.faq details{border:1px solid var(--line);border-radius:16px;background:#06162a;padding:17px 19px}.faq summary{font-weight:900;cursor:pointer}.faq p{color:var(--muted);font-size:13px;margin-bottom:0}
+.cta{padding:0 0 90px}.cta-box{padding:46px;border:1px solid rgba(216,184,108,.34);border-radius:28px;background:linear-gradient(120deg,#0c2949,#041326);display:flex;align-items:center;justify-content:space-between;gap:28px;box-shadow:0 24px 70px rgba(0,0,0,.28);position:relative;overflow:hidden}
+.cta-box:after{content:"MN";position:absolute;right:2%;top:-40px;font-size:190px;font-weight:950;color:rgba(216,184,108,.045)}.cta-box>*{position:relative;z-index:2}.cta-box p{color:#c6cfdb;max-width:640px}
+footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:11px}.footer-grid{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.social-float{position:fixed;right:18px;bottom:18px;z-index:120;display:flex;flex-direction:column;gap:11px}.social-float a{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;box-shadow:0 14px 34px rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.18);transition:.2s}.social-float a:hover{transform:translateY(-3px) scale(1.03)}.social-float svg{width:25px;height:25px;fill:#fff}.ig{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)}.wa{background:linear-gradient(135deg,#25d366,#1ca94c)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}.modal.open{display:flex}.modal img{max-width:min(1400px,96vw);max-height:90vh;border-radius:14px;box-shadow:0 30px 90px rgba(0,0,0,.55)}.modal button{position:absolute;top:20px;right:22px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.4);color:#fff;font-size:25px;cursor:pointer}
+@media(max-width:980px){
+.navlinks{display:none;position:absolute;top:82px;left:18px;right:18px;flex-direction:column;align-items:stretch;padding:18px;background:#06152a;border:1px solid var(--line);border-radius:15px}.navlinks.open{display:flex}.menu{display:block}
+.hero-grid,.why,.faq,.insta{grid-template-columns:1fr}.hero-visual{min-height:510px}.hero-photo{left:0}.services{grid-template-columns:1fr 1fr}.portfolio{grid-template-columns:1fr 1fr}.trust-grid{grid-template-columns:1fr 1fr}.process{grid-template-columns:1fr 1fr}.section-head{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:650px){
+.container{width:min(1200px,calc(100% - 26px))}.previewbar{font-size:8px}.nav{min-height:72px}.navlinks{top:72px}.brand img{width:48px;height:48px}.hero{padding-top:48px}h1{font-size:45px}.lead{font-size:16px}.actions .btn,.cta-box .btn{width:100%}.hero-visual{min-height:420px}.fc1{top:12px;left:10px}.fc2{right:10px;bottom:14px}.trust-grid,.services,.portfolio,.benefits,.process,.insta-gallery{grid-template-columns:1fr}.section{padding:62px 0}.brand-stage{min-height:320px}.cta-box{padding:30px 22px;flex-direction:column;align-items:flex-start}.project-body h3{font-size:21px}.social-float{right:13px;bottom:13px}.social-float a{width:50px;height:50px}
+}
 </style>
 </head>
 <body>
 <div class="previewbar">PRÉVIA V2 • AMBIENTE DE TESTE • O SITE PRINCIPAL NÃO FOI SUBSTITUÍDO</div>
-<header class="site-header"><div class="container"><nav class="nav"><a class="brand" href="#top"><img src="/assets/logo.webp" alt="Logo MN Engenharia">MN Engenharia</a><div class="nav-links" id="nav"><a href="#servicos">Serviços</a><a href="#atuacao">Atuação</a><a href="#processo">Como trabalhamos</a><a class="nav-social" href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a><a class="nav-cta" href="#orcamento">Orçamento</a></div><button class="menu-btn" id="menu" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button></nav></div></header>
-<main id="top">
-<section class="hero"><div class="container hero-grid"><div class="reveal"><div class="eyebrow"><i></i> Engenharia em Itumbiara • Goiás</div><h1>Seu projeto merece <span>engenharia do início ao fim.</span></h1><p class="lead">Projetos, construção, acompanhamento, gerenciamento e vistorias em uma atuação pensada para organizar decisões, reduzir improvisos e manter a obra mais clara para o cliente.</p><div class="hero-actions"><a class="btn btn-primary" href="#orcamento">Solicitar orçamento →</a><a class="btn btn-secondary" href="#servicos">Conhecer os serviços</a></div><div class="hero-points"><span>Atendimento em Itumbiara e região</span><span>Projeto + obra</span><span>Gestão e acompanhamento</span></div></div><div class="hero-visual reveal"><div class="hero-photo"><img src="/assets/acompanhamento.webp" alt="Acompanhamento de obra pela MN Engenharia"></div><div class="floating-card fc-top"><strong>Planejamento técnico</strong><span>Decisões organizadas antes e durante a execução.</span></div><div class="floating-card fc-bottom"><strong>Obra mais acompanhada</strong><span>Cronograma, etapas, materiais e pontos de atenção conforme o escopo.</span></div><div class="flow"><b>Projeto</b><em>→</em><b>Planejamento</b><em>→</em><b>Execução</b></div></div></div></section>
-<section class="trust"><div class="container trust-grid"><div class="trust-item reveal"><b>01</b><strong>Projetos de Engenharia</strong><span>Planejamento técnico antes da execução.</span></div><div class="trust-item reveal"><b>02</b><strong>Construção</strong><span>Organização das etapas e do escopo da obra.</span></div><div class="trust-item reveal"><b>03</b><strong>Gerenciamento</strong><span>Cronograma, materiais e prioridades.</span></div><div class="trust-item reveal"><b>04</b><strong>Vistorias</strong><span>Análise técnica, registros e orientação.</span></div></div></section>
-<section class="section alt" id="servicos"><div class="container"><div class="section-head reveal"><div><div class="kicker">Serviços</div><h2>Uma engenharia que acompanha a obra de verdade.</h2></div><p>Você pode contratar um serviço específico ou combinar soluções conforme a fase e a necessidade do empreendimento.</p></div><div class="services"><a class="service reveal" href="#orcamento"><div class="service-icon">⌂</div><small>PROJETOS</small><h3>Projetos de Engenharia</h3><p>Planejamento, compatibilização e detalhamentos para orientar melhor a execução.</p><span class="arrow">↗</span></a><a class="service reveal" href="#orcamento"><div class="service-icon">▰</div><small>CONSTRUÇÃO</small><h3>Construção de Obras</h3><p>Planejamento, organização da execução e acompanhamento das atividades contratadas.</p><span class="arrow">↗</span></a><a class="service reveal" href="#orcamento"><div class="service-icon">✓</div><small>ACOMPANHAMENTO</small><h3>Acompanhamento de Obras</h3><p>Visitas, registros, cronograma e apoio técnico nas decisões de execução.</p><span class="arrow">↗</span></a><a class="service reveal" href="#orcamento"><div class="service-icon">◇</div><small>GERENCIAMENTO</small><h3>Gerenciamento de Obras</h3><p>Cronograma, materiais, cotações, prioridades e organização da rotina.</p><span class="arrow">↗</span></a><a class="service reveal" href="#orcamento"><div class="service-icon">◎</div><small>VISTORIAS</small><h3>Vistorias Técnicas</h3><p>Análise das condições observadas, registros e recomendações conforme o objetivo.</p><span class="arrow">↗</span></a><a class="service reveal" href="#orcamento"><div class="service-icon">＋</div><small>PROPOSTA</small><h3>Orçamento Personalizado</h3><p>Envie cidade, tipo de obra, metragem e fase atual para avaliarmos o melhor escopo.</p><span class="arrow">↗</span></a></div><div class="signature"><div class="signature-card reveal"><b>Projeto + Execução</b><h3>Menos distância entre o desenho e o canteiro.</h3><p>Quando projeto e execução conversam, dúvidas e ajustes podem ser tratados com mais clareza ao longo da obra.</p></div><div class="signature-card reveal"><b>Gestão + Comunicação</b><h3>Mais organização para o cliente acompanhar.</h3><p>Escopo, cronograma e pontos de atenção ficam mais claros para apoiar as decisões do empreendimento.</p></div></div></div></section>
-<section class="section" id="atuacao"><div class="container"><div class="section-head reveal"><div><div class="kicker">Atuação</div><h2>Projeto, acompanhamento e gestão no mesmo ecossistema.</h2></div><p>Uma estrutura de atendimento pensada para acompanhar diferentes fases do empreendimento.</p></div><div class="showcase"><a class="showcase-main reveal" href="#orcamento"><img src="/assets/acompanhamento.webp" alt="Acompanhamento de obra"><div class="shade"></div><div class="caption"><small>OBRA</small><strong>Acompanhamento de execução</strong><span>Planejamento, verificação de etapas e decisões técnicas.</span></div></a><div class="showcase-side"><a class="reveal" href="#orcamento"><img src="/assets/projetos.webp" alt="Projetos de engenharia"><div class="shade"></div><div class="caption"><small>PROJETO</small><strong>Planejamento técnico</strong><span>Base para executar melhor.</span></div></a><a class="reveal" href="#orcamento"><img src="/assets/gestao.webp" alt="Gerenciamento de obra"><div class="shade"></div><div class="caption"><small>GESTÃO</small><strong>Organização da obra</strong><span>Cronograma, materiais e prioridades.</span></div></a></div></div></div></section>
-<section class="section alt"><div class="container why"><div class="brand-stage reveal"><img src="/assets/logo.webp" alt="MN Engenharia"></div><div class="reveal"><div class="kicker">Por que a MN Engenharia</div><h2>Mais continuidade entre planejamento e execução.</h2><p class="lead">A proposta é aproximar a engenharia da rotina real da obra, com comunicação objetiva, responsabilidades definidas e acompanhamento das decisões que impactam o andamento.</p><div class="benefits"><div class="benefit"><b>Escopo definido</b><span>Serviços e responsabilidades alinhados antes do início.</span></div><div class="benefit"><b>Visão integrada</b><span>Projeto, execução e acompanhamento conectados.</span></div><div class="benefit"><b>Organização</b><span>Cronograma, pendências e prioridades quando contratados.</span></div><div class="benefit"><b>Comunicação</b><span>Informações mais claras para apoiar decisões.</span></div></div></div></div></section>
-<section class="section" id="processo"><div class="container"><div class="section-head reveal"><div><div class="kicker">Como trabalhamos</div><h2>Um processo claro desde o primeiro contato.</h2></div><p>O atendimento começa entendendo a necessidade real da obra antes de definir preço e responsabilidades.</p></div><div class="process"><div class="step reveal"><b>01</b><h3>Entendimento</h3><p>Localização, tipo de obra, metragem, fase atual e necessidade principal.</p></div><div class="step reveal"><b>02</b><h3>Escopo</h3><p>Definição dos serviços, entregas e responsabilidades que farão parte da contratação.</p></div><div class="step reveal"><b>03</b><h3>Proposta</h3><p>Valores, condições comerciais, prazo e forma de acompanhamento são apresentados.</p></div><div class="step reveal"><b>04</b><h3>Execução</h3><p>Após a contratação, iniciamos a rotina planejada para o serviço.</p></div></div></div></section>
-<section class="section alt" id="instagram"><div class="container insta-wrap"><div class="insta-card reveal"><div class="insta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="#fff" stroke="none"/></svg></div><div class="kicker">Instagram</div><h2>Acompanhe a MN Engenharia.</h2><p>Projetos, obras, informações técnicas e bastidores do trabalho da empresa em um só lugar.</p><a class="btn btn-secondary" href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener">Abrir @mn_engenhariacivil ↗</a></div><div class="insta-gallery"><a class="insta-tile reveal" href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener"><img src="/assets/projetos.webp" alt="Projetos da MN Engenharia"><span>Projetos</span></a><a class="insta-tile reveal" href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener"><img src="/assets/acompanhamento.webp" alt="Acompanhamento da MN Engenharia"><span>Obras</span></a><a class="insta-tile reveal" href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener"><img src="/assets/gestao.webp" alt="Gestão de obras da MN Engenharia"><span>Gestão</span></a></div></div></section>
-<section class="section" id="faq"><div class="container faq-grid"><div class="reveal"><div class="kicker">Dúvidas frequentes</div><h2>Antes de pedir um orçamento.</h2><p class="lead">Algumas respostas rápidas para ajudar o cliente a entender como o atendimento começa.</p></div><div class="faq reveal"><details><summary>A MN Engenharia faz projeto e construção?</summary><p>Sim. O escopo pode envolver projetos, construção, acompanhamento e gerenciamento, juntos ou separadamente.</p></details><details><summary>Posso contratar somente uma vistoria?</summary><p>Sim. Serviços pontuais podem ser contratados separadamente conforme o objetivo definido.</p></details><details><summary>Materiais e mão de obra estão sempre incluídos?</summary><p>Não. Esses itens somente estão incluídos quando descritos expressamente na proposta ou contrato.</p></details><details><summary>Como pedir orçamento?</summary><p>Envie cidade, tipo de obra, metragem aproximada, fase atual e, se possível, fotos ou projetos existentes.</p></details></div></div></section>
-<section class="cta" id="orcamento"><div class="container"><div class="cta-box reveal"><div><div class="kicker">Vamos falar da sua obra</div><h2>Conte o que você pretende construir.</h2><p>Envie as informações principais pelo WhatsApp e a MN Engenharia avalia o escopo mais adequado para o seu empreendimento.</p></div><a class="btn btn-primary" href="https://wa.me/5564993191135?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20MN%20Engenharia%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener">Solicitar orçamento →</a></div></div></section>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="#inicio"><img src="/assets/logo.webp" alt="MN Engenharia"><span>MN Engenharia</span></a>
+    <button class="menu" aria-label="Abrir menu" onclick="document.querySelector('.navlinks').classList.toggle('open')">☰</button>
+    <nav class="navlinks">
+      <a href="#servicos">Serviços</a>
+      <a href="#portfolio">Projetos</a>
+      <a href="#processo">Como trabalhamos</a>
+      <a href="#instagram">Instagram</a>
+      <a class="navcta" href="https://wa.me/5564993191135?text=Olá%2C%20vim%20pelo%20site%20da%20MN%20Engenharia%20e%20gostaria%20de%20solicitar%20um%20orçamento." target="_blank" rel="noopener">Orçamento</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow"><i></i> Engenharia em Itumbiara • Goiás</div>
+      <h1>Seu projeto merece <span>engenharia do início ao fim.</span></h1>
+      <p class="lead">Projetos, construção, acompanhamento, gerenciamento e vistorias em uma atuação pensada para organizar decisões, reduzir improvisos e dar mais clareza à execução.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://wa.me/5564993191135?text=Olá%2C%20vim%20pelo%20site%20da%20MN%20Engenharia%20e%20gostaria%20de%20solicitar%20um%20orçamento." target="_blank" rel="noopener">Solicitar orçamento →</a>
+        <a class="btn btn-secondary" href="#portfolio">Conhecer projetos</a>
+      </div>
+      <div class="hero-points"><span>Atendimento em Itumbiara e região</span><span>Projeto + obra</span><span>Acompanhamento técnico</span></div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-photo"><img src="/assets/hero-premium.webp" alt="Fachada residencial contemporânea"></div>
+      <div class="float-card fc1"><strong>Planejamento técnico</strong><span>Decisões organizadas antes e durante a execução.</span></div>
+      <div class="float-card fc2"><strong>Projeto + execução</strong><span>Uma visão integrada para reduzir improvisos e retrabalho.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="container trust-grid">
+    <div class="trust-item"><b>01</b><strong>Projetos de Engenharia</strong><span>Arquitetônico, estrutural e instalações.</span></div>
+    <div class="trust-item"><b>02</b><strong>Construção</strong><span>Planejamento e orientação da execução.</span></div>
+    <div class="trust-item"><b>03</b><strong>Gerenciamento</strong><span>Cronograma, materiais e acompanhamento.</span></div>
+    <div class="trust-item"><b>04</b><strong>Vistorias</strong><span>Avaliação técnica e orientação de soluções.</span></div>
+  </div>
+</section>
+
+<section class="section alt" id="servicos">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="kicker">Soluções completas</div><h2>Engenharia para cada etapa da sua obra.</h2></div>
+      <p>Do estudo inicial ao acompanhamento da execução, a MN Engenharia reúne serviços que ajudam o cliente a tomar decisões com mais segurança e organização.</p>
+    </div>
+    <div class="services">
+      <a class="service" href="/projetos.html"><span class="n">01</span><h3>Projetos</h3><p>Arquitetura, estrutura, fundações, elétrica, hidrossanitário e compatibilização.</p></a>
+      <a class="service" href="/construcao.html"><span class="n">02</span><h3>Construção</h3><p>Planejamento, execução organizada e acompanhamento técnico das principais etapas.</p></a>
+      <a class="service" href="/gerenciamento-de-obras.html"><span class="n">03</span><h3>Gerenciamento</h3><p>Cronograma, materiais, equipes e controle operacional da obra.</p></a>
+      <a class="service" href="/vistorias-tecnicas.html"><span class="n">04</span><h3>Vistorias</h3><p>Análise técnica para identificar problemas, riscos e orientar a melhor solução.</p></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="portfolio">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="kicker">Portfólio conceitual</div><h2>Projetos em destaque</h2></div>
+      <p>Estudos visuais e técnicos que representam possibilidades de linguagem arquitetônica, integração de disciplinas e apresentação de projetos residenciais.</p>
+    </div>
+
+    <div class="portfolio">
+      <article class="project-card">
+        <div class="project-image" data-full="/assets/projeto-conceitos-fachadas.webp"><img src="/assets/projeto-conceitos-fachadas.webp" alt="Painel conceitual de fachadas residenciais"></div>
+        <div class="project-body">
+          <small>ESTUDO 01</small><h3>Conceitos de Fachadas</h3>
+          <p>Exploração de diferentes linguagens contemporâneas, materiais, volumetria, iluminação e soluções para valorizar a identidade da residência.</p>
+          <div class="project-tags"><span>Fachadas</span><span>Arquitetura</span><span>Conceito</span></div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-image" data-full="/assets/projeto-arquitetura-integrada.webp"><img src="/assets/projeto-arquitetura-integrada.webp" alt="Painel de projeto residencial integrado"></div>
+        <div class="project-body">
+          <small>ESTUDO 02</small><h3>Projeto Residencial Integrado</h3>
+          <p>Apresentação que reúne arquitetura, estrutura, fundação, instalações e detalhamentos em uma leitura técnica mais completa do projeto.</p>
+          <div class="project-tags"><span>Estrutural</span><span>Hidrossanitário</span><span>Arquitetônico</span></div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-image" data-full="/assets/projeto-casas-urbanas.webp"><img src="/assets/projeto-casas-urbanas.webp" alt="Painel Casas Urbanas com fachadas e projetos técnicos"></div>
+        <div class="project-body">
+          <small>ESTUDO 03</small><h3>Casas Urbanas</h3>
+          <p>Soluções para terrenos urbanos com aproveitamento do espaço, fachadas contemporâneas e integração entre projeto arquitetônico e disciplinas complementares.</p>
+          <div class="project-tags"><span>Residencial</span><span>Compatibilização</span><span>Detalhamento</span></div>
+        </div>
+      </article>
+    </div>
+    <div class="note">As imagens desta seção são apresentadas como estudos e referências conceituais. Quando houver registros de obras executadas pela MN Engenharia, eles podem ser incorporados ao portfólio real do site.</div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container why">
+    <div class="brand-stage"><img src="/assets/logo.webp" alt="Marca MN Engenharia"></div>
+    <div>
+      <div class="kicker">Por que a MN Engenharia</div>
+      <h2>Projeto, planejamento e acompanhamento conectados.</h2>
+      <p class="lead">Uma obra fica mais clara quando projeto, execução, cronograma e decisões técnicas conversam entre si. A proposta da MN Engenharia é organizar essas frentes para o cliente ter mais previsibilidade.</p>
+      <div class="benefits">
+        <div class="benefit"><b>Visão integrada</b><span>Projeto e execução analisados como partes do mesmo processo.</span></div>
+        <div class="benefit"><b>Organização</b><span>Cronograma, materiais e prioridades acompanhados com clareza.</span></div>
+        <div class="benefit"><b>Orientação técnica</b><span>Decisões baseadas no projeto e nas condições reais da obra.</span></div>
+        <div class="benefit"><b>Comunicação</b><span>Informações mais objetivas para facilitar o acompanhamento do cliente.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="processo">
+  <div class="container">
+    <div class="section-head"><div><div class="kicker">Como trabalhamos</div><h2>Um processo simples para começar certo.</h2></div><p>Cada contratação é ajustada ao escopo, porte e fase da obra.</p></div>
+    <div class="process">
+      <div class="step"><b>01</b><h3>Entendimento</h3><p>Levantamos a necessidade, local, fase da obra e objetivo do cliente.</p></div>
+      <div class="step"><b>02</b><h3>Proposta</h3><p>Definimos escopo, entregas, condições e responsabilidades do serviço.</p></div>
+      <div class="step"><b>03</b><h3>Planejamento</h3><p>Organizamos projetos, cronograma e orientações antes da execução.</p></div>
+      <div class="step"><b>04</b><h3>Acompanhamento</h3><p>Monitoramos o que foi contratado e orientamos as decisões necessárias.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="instagram">
+  <div class="container insta">
+    <div class="insta-card">
+      <div class="kicker">Instagram</div><h2>Acompanhe a MN Engenharia</h2>
+      <p>Veja conteúdos sobre projetos, obras, vistorias, bastidores e soluções de engenharia.</p>
+      <div class="actions"><a class="btn btn-primary" href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener">@mn_engenhariacivil</a></div>
+    </div>
+    <div class="insta-gallery">
+      <img src="/assets/hero-premium.webp" alt="Fachada contemporânea">
+      <img src="/assets/projeto-conceitos-fachadas.webp" alt="Conceitos de fachadas">
+      <img src="/assets/projeto-casas-urbanas.webp" alt="Projetos residenciais">
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container faq">
+    <div><div class="kicker">Dúvidas frequentes</div><h2>Antes de começar sua obra.</h2><p class="lead">Algumas perguntas que ajudam a entender como podemos atuar.</p></div>
+    <div class="faq-list">
+      <details><summary>A MN Engenharia faz projeto e construção?</summary><p>Sim. O escopo pode contemplar projetos, planejamento, acompanhamento e execução conforme a necessidade de cada contratação.</p></details>
+      <details><summary>É possível contratar somente uma vistoria?</summary><p>Sim. Vistorias e visitas técnicas podem ser contratadas separadamente, de acordo com o problema ou objetivo do cliente.</p></details>
+      <details><summary>Vocês atendem somente Itumbiara?</summary><p>O atendimento principal é em Itumbiara e região, com análise de viabilidade para serviços em outras localidades.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta-box">
+    <div><div class="kicker">Vamos conversar sobre sua obra?</div><h2>Conte o que você precisa e solicite uma proposta.</h2><p>Projeto, construção, acompanhamento, gerenciamento ou vistoria: envie sua necessidade para a MN Engenharia.</p></div>
+    <a class="btn btn-primary" href="https://wa.me/5564993191135?text=Olá%2C%20vim%20pelo%20site%20da%20MN%20Engenharia%20e%20gostaria%20de%20solicitar%20um%20orçamento." target="_blank" rel="noopener">Falar no WhatsApp →</a>
+  </div>
+</section>
 </main>
-<footer class="site-footer"><div class="container footer-grid"><div>MN Engenharia Civil LTDA • Itumbiara - GO<br>(64) 99319-1135 • milton@mnengenharia.com.br</div><div class="footer-links"><a href="#servicos">Serviços</a><a href="#atuacao">Atuação</a><a href="#processo">Como trabalhamos</a><a href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener">Instagram</a></div></div></footer>
-<div class="social-floats" aria-label="Redes sociais"><a class="social-float float-instagram" href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener" aria-label="Abrir Instagram da MN Engenharia"><span class="tip">Instagram</span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="#fff" stroke="none"/></svg></a><a class="social-float float-whatsapp" href="https://wa.me/5564993191135?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20MN%20Engenharia%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener" aria-label="Falar com a MN Engenharia no WhatsApp"><span class="tip">Falar no WhatsApp</span><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.21c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.15-.42-2.19-1.35-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.01-.22-.53-.45-.46-.61-.47h-.52c-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.26s.98 2.62 1.11 2.8c.14.18 1.92 2.93 4.66 4.11.65.28 1.16.45 1.56.57.66.21 1.25.18 1.72.11.52-.08 1.6-.65 1.83-1.29.23-.63.23-1.17.16-1.29-.07-.11-.25-.18-.52-.32zM16.03 27.5h-.01c-2.04 0-4.04-.55-5.78-1.59l-.41-.24-4.3 1.13 1.15-4.19-.27-.43A11.45 11.45 0 0 1 4.65 16c0-6.28 5.11-11.39 11.4-11.39 3.04 0 5.9 1.18 8.05 3.34a11.31 11.31 0 0 1 3.33 8.06c0 6.28-5.11 11.39-11.4 11.39zm9.69-21.16A13.61 13.61 0 0 0 16.05 2.33C8.51 2.33 2.38 8.46 2.38 16c0 2.41.63 4.77 1.83 6.84L2.27 29.9l7.23-1.9a13.65 13.65 0 0 0 6.54 1.66h.01c7.53 0 13.66-6.13 13.66-13.67 0-3.65-1.42-7.08-3.99-9.65z"/></svg></a></div>
+
+<footer>
+  <div class="container footer-grid">
+    <div>MN Engenharia • Itumbiara – GO</div>
+    <div><a href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener">@mn_engenhariacivil</a> • <a href="#inicio">Voltar ao topo</a></div>
+  </div>
+</footer>
+
+<div class="social-float">
+  <a class="ig" href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2.2A2.8 2.8 0 0 0 4.2 7v10A2.8 2.8 0 0 0 7 19.8h10a2.8 2.8 0 0 0 2.8-2.8V7A2.8 2.8 0 0 0 17 4.2H7zm5 3.3A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2.2A2.3 2.3 0 1 0 14.3 12 2.3 2.3 0 0 0 12 9.7zm4.8-3.4a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1z"/></svg></a>
+  <a class="wa" href="https://wa.me/5564993191135?text=Olá%2C%20vim%20pelo%20site%20da%20MN%20Engenharia%20e%20gostaria%20de%20solicitar%20um%20orçamento." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M20 3.9A10 10 0 0 0 4.4 16.1L3 21l5-1.3A10 10 0 1 0 20 3.9zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.3 0-.5.1-.6l.4-.5a1.8 1.8 0 0 0 .2-.5.6.6 0 0 0 0-.5c-.1-.1-.6-1.3-.8-1.8-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A2.9 2.9 0 0 0 7 9.7a5 5 0 0 0 1.1 2.7 11.2 11.2 0 0 0 4.3 3.8 14 14 0 0 0 1.5.6 3.6 3.6 0 0 0 1.7.1 2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+</div>
+
+<div class="modal" id="modal"><button onclick="closeModal()">×</button><img alt="Projeto ampliado"></div>
 <script>
-const menu=document.getElementById('menu'),nav=document.getElementById('nav');menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}));
-const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.querySelectorAll('.navlinks a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.navlinks').classList.remove('open')));
+document.querySelectorAll('.project-image').forEach(el=>el.addEventListener('click',()=>{const m=document.getElementById('modal');m.querySelector('img').src=el.dataset.full;m.classList.add('open')}));
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 </script>
 </body>
 </html>
