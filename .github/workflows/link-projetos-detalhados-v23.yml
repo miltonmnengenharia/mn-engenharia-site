@@ -1,0 +1,49 @@
+name: Link Projetos Detalhados V23
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/link-projetos-detalhados-v23.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Adiciona links nos cards
+        shell: bash
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          p=Path('teste-v2.html')
+          s=p.read_text(encoding='utf-8')
+          marker='/* PROJECT-DETAIL-LINKS-V23 */'
+          if marker not in s:
+              css='''
+/* PROJECT-DETAIL-LINKS-V23 */
+.project-detail-link{display:inline-flex;align-items:center;gap:7px;margin-top:18px;color:var(--gold2);font-size:11px;font-weight:950;letter-spacing:.04em;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(216,184,108,.045);transition:.2s}
+.project-detail-link:hover{transform:translateY(-2px);border-color:rgba(245,221,161,.5);background:rgba(216,184,108,.09)}
+'''
+              s=s.replace('</style>',css+'\n</style>',1)
+          replacements=[
+            ('<div class="project-tags"><span>Fachadas</span><span>Arquitetura</span><span>Conceito</span></div>', '<div class="project-tags"><span>Fachadas</span><span>Arquitetura</span><span>Conceito</span></div><a class="project-detail-link" href="/projeto-conceitos-fachadas.html">Ver projeto completo →</a>'),
+            ('<div class="project-tags"><span>Estrutural</span><span>Hidrossanitário</span><span>Arquitetônico</span></div>', '<div class="project-tags"><span>Estrutural</span><span>Hidrossanitário</span><span>Arquitetônico</span></div><a class="project-detail-link" href="/projeto-residencial-integrado.html">Ver projeto completo →</a>'),
+            ('<div class="project-tags"><span>Residencial</span><span>Compatibilização</span><span>Detalhamento</span></div>', '<div class="project-tags"><span>Residencial</span><span>Compatibilização</span><span>Detalhamento</span></div><a class="project-detail-link" href="/projeto-casas-urbanas.html">Ver projeto completo →</a>')
+          ]
+          for old,new in replacements:
+              if new not in s:
+                  s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add teste-v2.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Adiciona links das páginas individuais no portfólio'
+          git push origin main
