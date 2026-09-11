@@ -1,0 +1,142 @@
+name: Preview Portfolio e Orcamento
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/preview-portfolio-orcamento.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Aplicar melhorias na previa
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('teste-v2.html')
+          s = path.read_text(encoding='utf-8')
+
+          marker = '/* PREVIEW-V22-COMERCIAL */'
+          if marker not in s:
+              css = r'''
+/* PREVIEW-V22-COMERCIAL */
+.portfolio-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:-10px 0 26px}
+.portfolio-chip{padding:9px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:#cbd4df;font-size:10px;font-weight:900;letter-spacing:.04em}
+.portfolio-chip.active{background:linear-gradient(135deg,var(--gold2),#b58b3f);color:#07111f;border-color:transparent}
+.project-card{position:relative}
+.project-card:before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:24px;background:linear-gradient(135deg,rgba(245,221,161,.05),transparent 34%);z-index:2}
+.project-body{position:relative;z-index:3}
+.project-meta{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:17px;padding-top:15px;border-top:1px solid var(--line2)}
+.project-meta span{font-size:10px;color:#9fabb9}.project-meta b{font-size:10px;color:var(--gold2);letter-spacing:.08em;text-transform:uppercase}
+.quick-quote{display:grid;grid-template-columns:.82fr 1.18fr;gap:32px;align-items:start}
+.quote-intro{position:sticky;top:120px;padding:30px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,#0b2542,#041326);box-shadow:0 24px 60px rgba(0,0,0,.24)}
+.quote-intro h2{font-size:clamp(32px,4vw,50px)}
+.quote-intro p{color:var(--muted)}
+.quote-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.quote-badges span{padding:7px 10px;border-radius:999px;border:1px solid var(--line);font-size:10px;color:#ccd5df}
+.quote-form{padding:30px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,#081b31,#041326);box-shadow:0 24px 60px rgba(0,0,0,.22)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:10px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;color:var(--gold2)}
+.field input,.field select,.field textarea{width:100%;border:1px solid rgba(216,184,108,.20);border-radius:13px;background:#03101f;color:#f8fafc;padding:13px 14px;font:inherit;font-size:13px;outline:none;transition:.2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(245,221,161,.55);box-shadow:0 0 0 3px rgba(216,184,108,.08)}
+.field textarea{min-height:110px;resize:vertical}.quote-form .btn{margin-top:18px;width:100%;min-height:54px}
+.form-note{font-size:10px;color:#9fabb9;margin-top:11px;text-align:center}
+@media(max-width:980px){.quick-quote{grid-template-columns:1fr}.quote-intro{position:relative;top:auto}.form-grid{grid-template-columns:1fr}}
+'''
+              s = s.replace('</style>', css + '\n</style>', 1)
+
+          if 'PORTFOLIO-V22-TOOLBAR' not in s:
+              s = s.replace('<div class="portfolio">', '''<!-- PORTFOLIO-V22-TOOLBAR -->\n    <div class="portfolio-toolbar" aria-label="Categorias do portfólio">\n      <span class="portfolio-chip active">Todos</span>\n      <span class="portfolio-chip">Fachadas</span>\n      <span class="portfolio-chip">Arquitetônico</span>\n      <span class="portfolio-chip">Estrutural</span>\n      <span class="portfolio-chip">Instalações</span>\n    </div>\n    <div class="portfolio">''', 1)
+
+          # adiciona uma linha de metadados em cada card, sem alterar o conteúdo existente
+          if 'project-meta' not in s:
+              labels = [
+                  ('Fachadas • Arquitetura • Conceito','Visual + técnico'),
+                  ('Arquitetura • Estrutura • Instalações','Projeto integrado'),
+                  ('Residencial • Compatibilização','Solução urbana'),
+              ]
+              start = 0
+              for desc, label in labels:
+                  idx = s.find('</div>\n        </div>\n      </article>', start)
+                  if idx == -1: break
+                  insert = f'''</div>\n          <div class="project-meta"><span>{desc}</span><b>{label}</b></div>'''
+                  s = s[:idx] + insert + s[idx+6:]
+                  start = idx + len(insert)
+
+          if 'id="orcamento-rapido"' not in s:
+              quote = r'''
+<section class="section alt" id="orcamento-rapido">
+  <div class="container quick-quote">
+    <div class="quote-intro">
+      <div class="kicker">Orçamento rápido</div>
+      <h2>Conte um pouco sobre o seu projeto.</h2>
+      <p>Preencha as informações principais e o site prepara uma mensagem organizada para você enviar diretamente pelo WhatsApp da MN Engenharia.</p>
+      <div class="quote-badges"><span>Projetos</span><span>Construção</span><span>Gerenciamento</span><span>Vistorias</span></div>
+    </div>
+    <form class="quote-form" id="quoteForm">
+      <div class="form-grid">
+        <div class="field"><label for="qNome">Nome</label><input id="qNome" required placeholder="Seu nome"></div>
+        <div class="field"><label for="qCidade">Cidade</label><input id="qCidade" required placeholder="Ex.: Itumbiara - GO"></div>
+        <div class="field"><label for="qServico">Serviço</label><select id="qServico" required><option value="">Selecione</option><option>Projeto de engenharia</option><option>Construção</option><option>Gerenciamento / acompanhamento</option><option>Vistoria técnica</option><option>Projeto + obra</option><option>Outro</option></select></div>
+        <div class="field"><label for="qMetragem">Metragem aproximada</label><input id="qMetragem" placeholder="Ex.: 180 m²"></div>
+        <div class="field"><label for="qFase">Fase atual</label><select id="qFase"><option>Estou começando / tenho uma ideia</option><option>Já tenho terreno</option><option>Já tenho projeto</option><option>Obra em andamento</option><option>Preciso avaliar um problema</option></select></div>
+        <div class="field"><label for="qPrazo">Quando pretende começar?</label><select id="qPrazo"><option>O quanto antes</option><option>Nos próximos 30 dias</option><option>Em 2 a 3 meses</option><option>Mais adiante</option><option>Ainda estou planejando</option></select></div>
+        <div class="field full"><label for="qDetalhes">Detalhes</label><textarea id="qDetalhes" placeholder="Conte resumidamente o que você precisa, quantidade de pavimentos, tipo de imóvel ou qualquer informação importante."></textarea></div>
+      </div>
+      <button class="btn btn-primary" type="submit">Enviar pedido pelo WhatsApp →</button>
+      <div class="form-note">Nenhuma informação é enviada automaticamente. O WhatsApp abre com a mensagem pronta para você revisar antes do envio.</div>
+    </form>
+  </div>
+</section>
+'''
+              s = s.replace('<section class="section alt" id="instagram">', quote + '\n<section class="section alt" id="instagram">', 1)
+
+          if 'ORCAMENTO-V22-SCRIPT' not in s:
+              script = r'''
+<script>
+// ORCAMENTO-V22-SCRIPT
+const quoteForm=document.getElementById('quoteForm');
+if(quoteForm){quoteForm.addEventListener('submit',function(e){
+  e.preventDefault();
+  const v=id=>document.getElementById(id)?.value?.trim()||'Não informado';
+  const msg=[
+    'Olá, vim pelo site da MN Engenharia e gostaria de solicitar um orçamento.',
+    '',
+    '*Nome:* '+v('qNome'),
+    '*Cidade:* '+v('qCidade'),
+    '*Serviço:* '+v('qServico'),
+    '*Metragem aproximada:* '+v('qMetragem'),
+    '*Fase atual:* '+v('qFase'),
+    '*Previsão para começar:* '+v('qPrazo'),
+    '*Detalhes:* '+v('qDetalhes')
+  ].join('\n');
+  window.open('https://wa.me/5564993191135?text='+encodeURIComponent(msg),'_blank','noopener');
+});}
+</script>
+'''
+              s = s.replace('</body>', script + '\n</body>', 1)
+
+          # atalho no menu para o orçamento rápido
+          if 'href="#orcamento-rapido"' not in s:
+              s = s.replace('<a href="#processo">Como trabalhamos</a>', '<a href="#processo">Como trabalhamos</a>\n      <a href="#orcamento-rapido">Orçamento rápido</a>', 1)
+
+          path.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add teste-v2.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Melhora portfólio e adiciona orçamento rápido'
+          git push origin main
