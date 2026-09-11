@@ -1,0 +1,47 @@
+name: Fix Preview Relative Links
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-preview-relative-links.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Ajusta links para GitHub Pages
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('teste-v2.html')
+          s = p.read_text(encoding='utf-8')
+          replacements = {
+              'href="/projetos.html"': 'href="projetos.html"',
+              'href="/construcao.html"': 'href="construcao.html"',
+              'href="/gerenciamento-de-obras.html"': 'href="gerenciamento-de-obras.html"',
+              'href="/vistorias-tecnicas.html"': 'href="vistorias-tecnicas.html"',
+              'href="/projeto-conceitos-fachadas.html"': 'href="projeto-conceitos-fachadas.html"',
+              'href="/projeto-residencial-integrado.html"': 'href="projeto-residencial-integrado.html"',
+              'href="/projeto-casas-urbanas.html"': 'href="projeto-casas-urbanas.html"',
+              'src="/assets/': 'src="assets/',
+              'href="/assets/': 'href="assets/',
+              'data-full="/assets/': 'data-full="assets/'
+          }
+          for old, new in replacements.items():
+              s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Salva correção
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add teste-v2.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Corrige links relativos da prévia'
+          git push origin main
