@@ -15,29 +15,7 @@ jobs:
           ref: main
       - name: Adiciona links nos cards
         shell: bash
-        run: |
-          python <<'PY'
-          from pathlib import Path
-          p=Path('teste-v2.html')
-          s=p.read_text(encoding='utf-8')
-          marker='/* PROJECT-DETAIL-LINKS-V23 */'
-          if marker not in s:
-              css='''
-/* PROJECT-DETAIL-LINKS-V23 */
-.project-detail-link{display:inline-flex;align-items:center;gap:7px;margin-top:18px;color:var(--gold2);font-size:11px;font-weight:950;letter-spacing:.04em;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(216,184,108,.045);transition:.2s}
-.project-detail-link:hover{transform:translateY(-2px);border-color:rgba(245,221,161,.5);background:rgba(216,184,108,.09)}
-'''
-              s=s.replace('</style>',css+'\n</style>',1)
-          replacements=[
-            ('<div class="project-tags"><span>Fachadas</span><span>Arquitetura</span><span>Conceito</span></div>', '<div class="project-tags"><span>Fachadas</span><span>Arquitetura</span><span>Conceito</span></div><a class="project-detail-link" href="/projeto-conceitos-fachadas.html">Ver projeto completo →</a>'),
-            ('<div class="project-tags"><span>Estrutural</span><span>Hidrossanitário</span><span>Arquitetônico</span></div>', '<div class="project-tags"><span>Estrutural</span><span>Hidrossanitário</span><span>Arquitetônico</span></div><a class="project-detail-link" href="/projeto-residencial-integrado.html">Ver projeto completo →</a>'),
-            ('<div class="project-tags"><span>Residencial</span><span>Compatibilização</span><span>Detalhamento</span></div>', '<div class="project-tags"><span>Residencial</span><span>Compatibilização</span><span>Detalhamento</span></div><a class="project-detail-link" href="/projeto-casas-urbanas.html">Ver projeto completo →</a>')
-          ]
-          for old,new in replacements:
-              if new not in s:
-                  s=s.replace(old,new,1)
-          p.write_text(s,encoding='utf-8')
-          PY
+        run: python -c "import base64;exec(base64.b64decode('CmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApwPVBhdGgoInRlc3RlLXYyLmh0bWwiKQpzPXAucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpCm1hcmtlcj0iLyogUFJPSkVDVC1ERVRBSUwtTElOS1MtVjIzICovIgppZiBtYXJrZXIgbm90IGluIHM6CiAgICBjc3M9IiIiCi8qIFBST0pFQ1QtREVUQUlMLUxJTktTLVYyMyAqLwoucHJvamVjdC1kZXRhaWwtbGlua3tkaXNwbGF5OmlubGluZS1mbGV4O2FsaWduLWl0ZW1zOmNlbnRlcjtnYXA6N3B4O21hcmdpbi10b3A6MThweDtjb2xvcjp2YXIoLS1nb2xkMik7Zm9udC1zaXplOjExcHg7Zm9udC13ZWlnaHQ6OTUwO2xldHRlci1zcGFjaW5nOi4wNGVtO3BhZGRpbmc6OXB4IDEycHg7Ym9yZGVyOjFweCBzb2xpZCB2YXIoLS1saW5lKTtib3JkZXItcmFkaXVzOjEwcHg7YmFja2dyb3VuZDpyZ2JhKDIxNiwxODQsMTA4LC4wNDUpO3RyYW5zaXRpb246LjJzfQoucHJvamVjdC1kZXRhaWwtbGluazpob3Zlcnt0cmFuc2Zvcm06dHJhbnNsYXRlWSgtMnB4KTtib3JkZXItY29sb3I6cmdiYSgyNDUsMjIxLDE2MSwuNSk7YmFja2dyb3VuZDpyZ2JhKDIxNiwxODQsMTA4LC4wOSl9CiIiIgogICAgcz1zLnJlcGxhY2UoIjwvc3R5bGU+Iixjc3MrIlxuPC9zdHlsZT4iLDEpCnJlcGxhY2VtZW50cz1bCignPGRpdiBjbGFzcz0icHJvamVjdC10YWdzIj48c3Bhbj5GYWNoYWRhczwvc3Bhbj48c3Bhbj5BcnF1aXRldHVyYTwvc3Bhbj48c3Bhbj5Db25jZWl0bzwvc3Bhbj48L2Rpdj4nLCAnPGRpdiBjbGFzcz0icHJvamVjdC10YWdzIj48c3Bhbj5GYWNoYWRhczwvc3Bhbj48c3Bhbj5BcnF1aXRldHVyYTwvc3Bhbj48c3Bhbj5Db25jZWl0bzwvc3Bhbj48L2Rpdj48YSBjbGFzcz0icHJvamVjdC1kZXRhaWwtbGluayIgaHJlZj0iL3Byb2pldG8tY29uY2VpdG9zLWZhY2hhZGFzLmh0bWwiPlZlciBwcm9qZXRvIGNvbXBsZXRvIOKGkjwvYT4nKSwKKCc8ZGl2IGNsYXNzPSJwcm9qZWN0LXRhZ3MiPjxzcGFuPkVzdHJ1dHVyYWw8L3NwYW4+PHNwYW4+SGlkcm9zc2FuaXTDoXJpbzwvc3Bhbj48c3Bhbj5BcnF1aXRldMO0bmljbzwvc3Bhbj48L2Rpdj4nLCAnPGRpdiBjbGFzcz0icHJvamVjdC10YWdzIj48c3Bhbj5Fc3RydXR1cmFsPC9zcGFuPjxzcGFuPkhpZHJvc3Nhbml0w6FyaW88L3NwYW4+PHNwYW4+QXJxdWl0ZXTDtG5pY288L3NwYW4+PC9kaXY+PGEgY2xhc3M9InByb2plY3QtZGV0YWlsLWxpbmsiIGhyZWY9Ii9wcm9qZXRvLXJlc2lkZW5jaWFsLWludGVncmFkby5odG1sIj5WZXIgcHJvamV0byBjb21wbGV0byDihpI8L2E+JyksCignPGRpdiBjbGFzcz0icHJvamVjdC10YWdzIj48c3Bhbj5SZXNpZGVuY2lhbDwvc3Bhbj48c3Bhbj5Db21wYXRpYmlsaXphw6fDo288L3NwYW4+PHNwYW4+RGV0YWxoYW1lbnRvPC9zcGFuPjwvZGl2PicsICc8ZGl2IGNsYXNzPSJwcm9qZWN0LXRhZ3MiPjxzcGFuPlJlc2lkZW5jaWFsPC9zcGFuPjxzcGFuPkNvbXBhdGliaWxpemHDp8Ojbzwvc3Bhbj48c3Bhbj5EZXRhbGhhbWVudG88L3NwYW4+PC9kaXY+PGEgY2xhc3M9InByb2plY3QtZGV0YWlsLWxpbmsiIGhyZWY9Ii9wcm9qZXRvLWNhc2FzLXVyYmFuYXMuaHRtbCI+VmVyIHByb2pldG8gY29tcGxldG8g4oaSPC9hPicpCl0KZm9yIG9sZCxuZXcgaW4gcmVwbGFjZW1lbnRzOgogICAgaWYgbmV3IG5vdCBpbiBzOgogICAgICAgIHM9cy5yZXBsYWNlKG9sZCxuZXcsMSkKcC53cml0ZV90ZXh0KHMsZW5jb2Rpbmc9InV0Zi04IikK').decode())"
       - name: Commit
         shell: bash
         run: |
