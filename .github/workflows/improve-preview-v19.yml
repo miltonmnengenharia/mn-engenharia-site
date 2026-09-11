@@ -1,0 +1,98 @@
+name: Improve preview V19
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/improve-preview-v19.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  improve-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Improve logo, hero and project lightbox
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('teste-v2.html')
+          s = path.read_text(encoding='utf-8')
+
+          # Force browsers/CDN to request the new high-quality assets.
+          assets = [
+              'hero-premium.webp',
+              'projeto-conceitos-fachadas.webp',
+              'projeto-arquitetura-integrada.webp',
+              'projeto-casas-urbanas.webp',
+          ]
+          for asset in assets:
+              s = s.replace(f'/assets/{asset}?v=19', f'/assets/{asset}?v=20')
+              s = s.replace(f'/assets/{asset}', f'/assets/{asset}?v=20')
+              s = s.replace(f'?v=20?v=20', '?v=20')
+
+          marker = '/* PREVIEW-V20-QUALITY */'
+          if marker not in s:
+              css = r'''
+/* PREVIEW-V20-QUALITY */
+/* Marca mais presente no cabeçalho */
+.nav{min-height:96px}
+.brand{gap:15px;font-size:19px;letter-spacing:-.015em;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.35)}
+.brand img{width:76px;height:76px;object-fit:contain;padding:3px;border-radius:50%;background:radial-gradient(circle,rgba(245,221,161,.12),rgba(216,184,108,.025) 68%,transparent 72%);border:1px solid rgba(245,221,161,.22);box-shadow:0 0 0 5px rgba(216,184,108,.025),0 10px 30px rgba(0,0,0,.34),0 0 28px rgba(216,184,108,.10);filter:drop-shadow(0 8px 14px rgba(0,0,0,.30))}
+.brand span{font-size:19px;font-weight:950;white-space:nowrap}
+
+/* Hero: mostra o arquivo HQ de forma limpa, sem aparência lavada */
+.hero-visual{min-height:620px}
+.hero-photo{inset:0 0 0 20px;border-color:rgba(245,221,161,.30);box-shadow:0 34px 90px rgba(0,0,0,.42)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center center;image-rendering:auto;filter:contrast(1.035) saturate(1.035)}
+.hero-photo:after{background:linear-gradient(180deg,rgba(2,7,17,0) 48%,rgba(2,7,17,.48) 100%)}
+
+/* Miniaturas técnicas: prioriza leitura e nitidez */
+.project-image{aspect-ratio:4/3;background:#f7f7f5}
+.project-image img{object-fit:contain;object-position:center;background:#fff;image-rendering:auto}
+.project-card:hover .project-image img{transform:scale(1.012)}
+
+/* Lightbox realmente grande e uniforme para os três projetos */
+.modal{padding:18px;background:rgba(0,0,0,.94);backdrop-filter:blur(5px)}
+.modal.open{display:flex}
+.modal img{display:block;width:min(1600px,96vw);height:auto;max-width:96vw;max-height:92vh;object-fit:contain;object-position:center;border-radius:16px;background:#fff;border:1px solid rgba(245,221,161,.20);box-shadow:0 34px 100px rgba(0,0,0,.68);image-rendering:auto}
+.modal button{z-index:3;top:18px;right:22px;width:52px;height:52px;background:rgba(4,14,27,.90);border:1px solid rgba(245,221,161,.34);box-shadow:0 10px 30px rgba(0,0,0,.34);font-size:28px}
+
+/* Logo de apresentação também mais valorizada */
+.brand-stage img{width:min(72%,360px);filter:drop-shadow(0 30px 58px rgba(0,0,0,.48)) drop-shadow(0 0 24px rgba(216,184,108,.12))}
+
+@media(max-width:980px){
+  .nav{min-height:86px}.navlinks{top:86px}
+  .brand img{width:64px;height:64px}.brand span{font-size:17px}
+  .hero-photo{left:0}.hero-visual{min-height:540px}
+  .modal img{width:96vw;max-height:90vh}
+}
+@media(max-width:650px){
+  .nav{min-height:78px}.navlinks{top:78px}
+  .brand{gap:10px}.brand img{width:56px;height:56px}.brand span{font-size:15px}
+  .hero-visual{min-height:440px}.hero-photo{inset:0}
+  .modal{padding:8px}.modal img{width:98vw;max-width:98vw;max-height:88vh;border-radius:10px}
+  .modal button{top:10px;right:10px;width:46px;height:46px}
+}
+'''
+              s = s.replace('</style>', css + '\n</style>', 1)
+
+          path.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit preview improvements
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add teste-v2.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Melhora logo, imagem principal e ampliação dos projetos'
+          git push origin main
