@@ -79,6 +79,27 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:1
 
 /* PREVIEW-V21 */
 .nav{min-height:96px}.brand{gap:15px;color:#fff}.brand img{width:76px;height:76px;object-fit:contain;padding:3px;border-radius:50%;border:1px solid rgba(245,221,161,.24);box-shadow:0 10px 30px rgba(0,0,0,.34),0 0 28px rgba(216,184,108,.12)}.brand span{font-size:19px;font-weight:950;white-space:nowrap}.hero-visual{min-height:620px}.hero-photo{inset:0 0 0 20px;border-color:rgba(245,221,161,.30);box-shadow:0 34px 90px rgba(0,0,0,.42)}.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center;filter:contrast(1.04) saturate(1.04)}.hero-photo:after{background:linear-gradient(180deg,rgba(2,7,17,0) 50%,rgba(2,7,17,.46))}.project-image{background:#fff}.project-image img{object-fit:contain;object-position:center;background:#fff}.project-card:hover .project-image img{transform:scale(1.01)}.modal{padding:14px;background:rgba(0,0,0,.95);backdrop-filter:blur(5px)}.modal img{display:block;width:min(1600px,96vw);height:auto;max-width:96vw;max-height:92vh;object-fit:contain;border-radius:16px;background:#fff;border:1px solid rgba(245,221,161,.22);box-shadow:0 34px 100px rgba(0,0,0,.68)}.modal button{z-index:3;top:16px;right:20px;width:52px;height:52px;background:rgba(4,14,27,.92);border-color:rgba(245,221,161,.35);font-size:28px}.brand-stage img{width:min(72%,360px)}@media(max-width:980px){.nav{min-height:86px}.navlinks{top:86px}.brand img{width:64px;height:64px}.brand span{font-size:17px}.hero-photo{left:0}.hero-visual{min-height:540px}.modal img{width:96vw;max-height:90vh}}@media(max-width:650px){.nav{min-height:78px}.navlinks{top:78px}.brand{gap:10px}.brand img{width:56px;height:56px}.brand span{font-size:15px}.hero-visual{min-height:440px}.hero-photo{inset:0}.modal{padding:6px}.modal img{width:98vw;max-width:98vw;max-height:88vh}.modal button{top:9px;right:9px;width:46px;height:46px}}
+
+/* PREVIEW-V22-COMERCIAL */
+.portfolio-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:-10px 0 26px}
+.portfolio-chip{padding:9px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:#cbd4df;font-size:10px;font-weight:900;letter-spacing:.04em}
+.portfolio-chip.active{background:linear-gradient(135deg,var(--gold2),#b58b3f);color:#07111f;border-color:transparent}
+.quick-quote{display:grid;grid-template-columns:.82fr 1.18fr;gap:32px;align-items:start}
+.quote-intro{position:sticky;top:120px;padding:30px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,#0b2542,#041326);box-shadow:0 24px 60px rgba(0,0,0,.24)}
+.quote-intro p{color:var(--muted)}
+.quote-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.quote-badges span{padding:7px 10px;border-radius:999px;border:1px solid var(--line);font-size:10px;color:#ccd5df}
+.quote-form{padding:30px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,#081b31,#041326);box-shadow:0 24px 60px rgba(0,0,0,.22)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:grid;gap:7px}.field.full{grid-column:1/-1}
+.field label{font-size:10px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;color:var(--gold2)}
+.field input,.field select,.field textarea{width:100%;border:1px solid rgba(216,184,108,.20);border-radius:13px;background:#03101f;color:#f8fafc;padding:13px 14px;font:inherit;font-size:13px;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(245,221,161,.55);box-shadow:0 0 0 3px rgba(216,184,108,.08)}
+.field textarea{min-height:110px;resize:vertical}
+.quote-form .btn{margin-top:18px;width:100%;min-height:54px}
+.form-note{font-size:10px;color:#9fabb9;margin-top:11px;text-align:center}
+@media(max-width:980px){.quick-quote{grid-template-columns:1fr}.quote-intro{position:relative;top:auto}.form-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -92,6 +113,7 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:1
       <a href="#servicos">Serviços</a>
       <a href="#portfolio">Projetos</a>
       <a href="#processo">Como trabalhamos</a>
+      <a href="#orcamento-rapido">Orçamento rápido</a>
       <a href="#instagram">Instagram</a>
       <a class="navcta" href="https://wa.me/5564993191135?text=Olá%2C%20vim%20pelo%20site%20da%20MN%20Engenharia%20e%20gostaria%20de%20solicitar%20um%20orçamento." target="_blank" rel="noopener">Orçamento</a>
     </nav>
@@ -150,6 +172,14 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:1
       <p>Estudos visuais e técnicos que representam possibilidades de linguagem arquitetônica, integração de disciplinas e apresentação de projetos residenciais.</p>
     </div>
 
+    <!-- PORTFOLIO-V22-TOOLBAR -->
+    <div class="portfolio-toolbar">
+      <span class="portfolio-chip active">Todos</span>
+      <span class="portfolio-chip">Fachadas</span>
+      <span class="portfolio-chip">Arquitetônico</span>
+      <span class="portfolio-chip">Estrutural</span>
+      <span class="portfolio-chip">Instalações</span>
+    </div>
     <div class="portfolio">
       <article class="project-card">
         <div class="project-image" data-full="/assets/projeto-conceitos-fachadas.webp?v=21"><img src="/assets/projeto-conceitos-fachadas.webp?v=21" alt="Painel conceitual de fachadas residenciais"></div>
@@ -211,6 +241,30 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:1
   </div>
 </section>
 
+<section class="section alt" id="orcamento-rapido">
+  <div class="container quick-quote">
+    <div class="quote-intro">
+      <div class="kicker">Orçamento rápido</div>
+      <h2>Conte um pouco sobre o seu projeto.</h2>
+      <p>Preencha as informações principais e o site prepara uma mensagem organizada para enviar pelo WhatsApp da MN Engenharia.</p>
+      <div class="quote-badges"><span>Projetos</span><span>Construção</span><span>Gerenciamento</span><span>Vistorias</span></div>
+    </div>
+    <form class="quote-form" id="quoteForm">
+      <div class="form-grid">
+        <div class="field"><label for="qNome">Nome</label><input id="qNome" required placeholder="Seu nome"></div>
+        <div class="field"><label for="qCidade">Cidade</label><input id="qCidade" required placeholder="Ex.: Itumbiara - GO"></div>
+        <div class="field"><label for="qServico">Serviço</label><select id="qServico" required><option value="">Selecione</option><option>Projeto de engenharia</option><option>Construção</option><option>Gerenciamento / acompanhamento</option><option>Vistoria técnica</option><option>Projeto + obra</option><option>Outro</option></select></div>
+        <div class="field"><label for="qMetragem">Metragem aproximada</label><input id="qMetragem" placeholder="Ex.: 180 m²"></div>
+        <div class="field"><label for="qFase">Fase atual</label><select id="qFase"><option>Estou começando / tenho uma ideia</option><option>Já tenho terreno</option><option>Já tenho projeto</option><option>Obra em andamento</option><option>Preciso avaliar um problema</option></select></div>
+        <div class="field"><label for="qPrazo">Quando pretende começar?</label><select id="qPrazo"><option>O quanto antes</option><option>Nos próximos 30 dias</option><option>Em 2 a 3 meses</option><option>Mais adiante</option><option>Ainda estou planejando</option></select></div>
+        <div class="field full"><label for="qDetalhes">Detalhes</label><textarea id="qDetalhes" placeholder="Conte resumidamente o que você precisa."></textarea></div>
+      </div>
+      <button class="btn btn-primary" type="submit">Enviar pedido pelo WhatsApp →</button>
+      <div class="form-note">O WhatsApp abre com a mensagem pronta para você revisar antes do envio.</div>
+    </form>
+  </div>
+</section>
+
 <section class="section alt" id="instagram">
   <div class="container insta">
     <div class="insta-card">
@@ -265,5 +319,16 @@ function closeModal(){document.getElementById('modal').classList.remove('open')}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 </script>
+<script>
+// ORCAMENTO-V22-SCRIPT
+const quoteForm=document.getElementById('quoteForm');
+if(quoteForm){quoteForm.addEventListener('submit',function(e){
+  e.preventDefault();
+  const v=id=>document.getElementById(id)?.value?.trim()||'Não informado';
+  const msg=['Olá, vim pelo site da MN Engenharia e gostaria de solicitar um orçamento.','','Nome: '+v('qNome'),'Cidade: '+v('qCidade'),'Serviço: '+v('qServico'),'Metragem aproximada: '+v('qMetragem'),'Fase atual: '+v('qFase'),'Previsão para começar: '+v('qPrazo'),'Detalhes: '+v('qDetalhes')].join('\n');
+  window.open('https://wa.me/5564993191135?text='+encodeURIComponent(msg),'_blank','noopener');
+});}
+</script>
+
 </body>
 </html>
