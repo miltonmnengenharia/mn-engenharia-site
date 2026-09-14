@@ -124,6 +124,13 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:1
   .mobile-bottom a{min-height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:950;padding:0 9px}
   .mobile-bottom .mb-quote{background:linear-gradient(135deg,var(--gold2),#b58b3f);color:#07111f}.mobile-bottom .mb-wa{border:1px solid rgba(37,211,102,.45);background:#123c2a;color:#eafff1}
 }
+
+/* PREVIEW-V26-CONFIANCA */
+.experience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.experience-card{padding:24px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#0b2542,#041326);box-shadow:0 18px 45px rgba(0,0,0,.18)}
+.experience-card b{display:block;color:var(--gold2);font-size:10px;letter-spacing:.12em;margin-bottom:20px}.experience-card strong{display:block;font-size:17px}.experience-card span{display:block;color:var(--muted);font-size:12px;margin-top:7px}
+@media(max-width:980px){.experience-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.experience-grid{grid-template-columns:1fr}.experience-card{padding:21px}}
 </style>
 </head>
 <body>
@@ -135,6 +142,7 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:1
     <button class="menu" aria-label="Abrir menu" onclick="document.querySelector('.navlinks').classList.toggle('open')">☰</button>
     <nav class="navlinks">
       <a href="#servicos">Serviços</a>
+      <a href="sobre.html">Sobre</a>
       <a href="#portfolio">Projetos</a>
       <a href="#processo">Como trabalhamos</a>
       <a href="#orcamento-rapido">Orçamento rápido</a>
@@ -237,13 +245,14 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:1
   </div>
 </section>
 
-<section class="section alt">
+<section class="section alt" id="sobre">
   <div class="container why">
     <div class="brand-stage"><img src="assets/logo.webp" alt="Marca MN Engenharia"></div>
     <div>
-      <div class="kicker">Por que a MN Engenharia</div>
+      <div class="kicker">Sobre a MN Engenharia</div>
       <h2>Projeto, planejamento e acompanhamento conectados.</h2>
       <p class="lead">Uma obra fica mais clara quando projeto, execução, cronograma e decisões técnicas conversam entre si. A proposta da MN Engenharia é organizar essas frentes para o cliente ter mais previsibilidade.</p>
+      <div class="actions"><a class="btn btn-secondary" href="sobre.html">Conhecer a MN Engenharia →</a></div>
       <div class="benefits">
         <div class="benefit"><b>Visão integrada</b><span>Projeto e execução analisados como partes do mesmo processo.</span></div>
         <div class="benefit"><b>Organização</b><span>Cronograma, materiais e prioridades acompanhados com clareza.</span></div>
@@ -310,13 +319,32 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:1
   </div>
 </section>
 
+
+<section class="section" id="experiencia">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="kicker">Experiência do cliente</div><h2>Confiança construída com processo.</h2></div>
+      <p>Em vez de publicar avaliações genéricas, a MN Engenharia prioriza informações claras sobre escopo, acompanhamento e comunicação. Depoimentos reais poderão ser incluídos com autorização dos clientes.</p>
+    </div>
+    <div class="experience-grid">
+      <div class="experience-card"><b>01</b><strong>Escopo bem definido</strong><span>O cliente entende o que está incluído, quais são as entregas e as responsabilidades da contratação.</span></div>
+      <div class="experience-card"><b>02</b><strong>Comunicação objetiva</strong><span>Informações e pendências são organizadas para facilitar decisões durante o projeto ou a obra.</span></div>
+      <div class="experience-card"><b>03</b><strong>Acompanhamento do contratado</strong><span>O foco permanece nas atividades e entregas previstas para cada serviço.</span></div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="faq">
   <div class="container faq">
     <div><div class="kicker">Dúvidas frequentes</div><h2>Antes de começar sua obra.</h2><p class="lead">Algumas perguntas que ajudam a entender como podemos atuar.</p></div>
     <div class="faq-list">
-      <details><summary>A MN Engenharia faz projeto e construção?</summary><p>Sim. O escopo pode contemplar projetos, planejamento, acompanhamento e execução conforme a necessidade de cada contratação.</p></details>
-      <details><summary>É possível contratar somente uma vistoria?</summary><p>Sim. Vistorias e visitas técnicas podem ser contratadas separadamente, de acordo com o problema ou objetivo do cliente.</p></details>
-      <details><summary>Vocês atendem somente Itumbiara?</summary><p>O atendimento principal é em Itumbiara e região, com análise de viabilidade para serviços em outras localidades.</p></details>
+      <details><summary>A MN Engenharia faz projeto e construção?</summary><p>Sim. A contratação pode envolver somente os projetos ou combinar projeto, planejamento, acompanhamento e execução, conforme o escopo definido para cada cliente.</p></details>
+      <details><summary>Posso contratar somente acompanhamento de obra?</summary><p>Sim. O acompanhamento pode ser contratado separadamente, inclusive com visitas técnicas avulsas ou periódicas, conforme a necessidade e o escopo acordado.</p></details>
+      <details><summary>É possível contratar somente uma vistoria?</summary><p>Sim. Vistorias e visitas técnicas podem ser contratadas separadamente para avaliar uma situação específica e orientar os próximos passos.</p></details>
+      <details><summary>ART ou RRT estão incluídos automaticamente?</summary><p>A necessidade de ART ou RRT depende da atividade e do profissional legalmente habilitado responsável. A emissão e eventuais taxas devem constar de forma clara na proposta de cada serviço.</p></details>
+      <details><summary>Posso enviar fotos, vídeos ou plantas antes do orçamento?</summary><p>Sim. Depois de preencher o orçamento rápido, o WhatsApp abre com as informações organizadas e você pode anexar fotos, vídeos, plantas ou outros documentos para ajudar na análise inicial.</p></details>
+      <details><summary>Vocês atendem somente Itumbiara?</summary><p>O atendimento principal é em Itumbiara e região. Serviços em outras cidades podem ser avaliados conforme distância, tipo de trabalho e necessidade de deslocamento.</p></details>
+      <details><summary>Como funciona o orçamento?</summary><p>Primeiro são levantadas as informações principais do serviço. Depois, a MN Engenharia avalia o escopo necessário e apresenta uma proposta com entregas, condições e responsabilidades definidas.</p></details>
     </div>
   </div>
 </section>
@@ -332,7 +360,7 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:#98a6b8;font-size:1
 <footer>
   <div class="container footer-grid">
     <div>MN Engenharia • Itumbiara – GO</div>
-    <div><a href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener">@mn_engenhariacivil</a> • <a href="#inicio">Voltar ao topo</a></div>
+    <div><a href="sobre.html">Sobre a empresa</a> • <a href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener">@mn_engenhariacivil</a> • <a href="#inicio">Voltar ao topo</a></div>
   </div>
 </footer>
 
