@@ -1,0 +1,68 @@
+name: Apply V26 Trust FAQ
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-v26-trust.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Aplica V26 na previa
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('teste-v2.html')
+          s=p.read_text(encoding='utf-8')
+
+          # Menu: adiciona página Sobre
+          if '<a href="sobre.html">Sobre</a>' not in s:
+              s=s.replace('<a href="#servicos">Serviços</a>', '<a href="#servicos">Serviços</a>\n      <a href="sobre.html">Sobre</a>', 1)
+
+          # Identifica a seção institucional já existente e cria acesso para a página completa
+          s=s.replace('<section class="section alt">\n  <div class="container why">', '<section class="section alt" id="sobre">\n  <div class="container why">', 1)
+          old_intro='<div class="kicker">Por que a MN Engenharia</div>\n      <h2>Projeto, planejamento e acompanhamento conectados.</h2>'
+          new_intro='<div class="kicker">Sobre a MN Engenharia</div>\n      <h2>Projeto, planejamento e acompanhamento conectados.</h2>'
+          s=s.replace(old_intro,new_intro,1)
+          old_lead='<p class="lead">Uma obra fica mais clara quando projeto, execução, cronograma e decisões técnicas conversam entre si. A proposta da MN Engenharia é organizar essas frentes para o cliente ter mais previsibilidade.</p>'
+          new_lead=old_lead+'\n      <div class="actions"><a class="btn btn-secondary" href="sobre.html">Conhecer a MN Engenharia →</a></div>'
+          if 'Conhecer a MN Engenharia →' not in s:
+              s=s.replace(old_lead,new_lead,1)
+
+          # Bloco de confiança sem inventar depoimentos
+          trust_section='''\n<section class="section" id="experiencia">\n  <div class="container">\n    <div class="section-head">\n      <div><div class="kicker">Experiência do cliente</div><h2>Confiança construída com processo.</h2></div>\n      <p>Em vez de publicar avaliações genéricas, a MN Engenharia prioriza informações claras sobre escopo, acompanhamento e comunicação. Depoimentos reais poderão ser incluídos com autorização dos clientes.</p>\n    </div>\n    <div class="experience-grid">\n      <div class="experience-card"><b>01</b><strong>Escopo bem definido</strong><span>O cliente entende o que está incluído, quais são as entregas e as responsabilidades da contratação.</span></div>\n      <div class="experience-card"><b>02</b><strong>Comunicação objetiva</strong><span>Informações e pendências são organizadas para facilitar decisões durante o projeto ou a obra.</span></div>\n      <div class="experience-card"><b>03</b><strong>Acompanhamento do contratado</strong><span>O foco permanece nas atividades e entregas previstas para cada serviço.</span></div>\n    </div>\n  </div>\n</section>\n'''
+          if 'id="experiencia"' not in s:
+              s=s.replace('<section class="section" id="faq">', trust_section+'\n<section class="section" id="faq">',1)
+
+          # FAQ ampliado
+          old_faq='''      <details><summary>A MN Engenharia faz projeto e construção?</summary><p>Sim. O escopo pode contemplar projetos, planejamento, acompanhamento e execução conforme a necessidade de cada contratação.</p></details>\n      <details><summary>É possível contratar somente uma vistoria?</summary><p>Sim. Vistorias e visitas técnicas podem ser contratadas separadamente, de acordo com o problema ou objetivo do cliente.</p></details>\n      <details><summary>Vocês atendem somente Itumbiara?</summary><p>O atendimento principal é em Itumbiara e região, com análise de viabilidade para serviços em outras localidades.</p></details>'''
+          new_faq='''      <details><summary>A MN Engenharia faz projeto e construção?</summary><p>Sim. A contratação pode envolver somente os projetos ou combinar projeto, planejamento, acompanhamento e execução, conforme o escopo definido para cada cliente.</p></details>\n      <details><summary>Posso contratar somente acompanhamento de obra?</summary><p>Sim. O acompanhamento pode ser contratado separadamente, inclusive com visitas técnicas avulsas ou periódicas, conforme a necessidade e o escopo acordado.</p></details>\n      <details><summary>É possível contratar somente uma vistoria?</summary><p>Sim. Vistorias e visitas técnicas podem ser contratadas separadamente para avaliar uma situação específica e orientar os próximos passos.</p></details>\n      <details><summary>ART ou RRT estão incluídos automaticamente?</summary><p>A necessidade de ART ou RRT depende da atividade e do profissional legalmente habilitado responsável. A emissão e eventuais taxas devem constar de forma clara na proposta de cada serviço.</p></details>\n      <details><summary>Posso enviar fotos, vídeos ou plantas antes do orçamento?</summary><p>Sim. Depois de preencher o orçamento rápido, o WhatsApp abre com as informações organizadas e você pode anexar fotos, vídeos, plantas ou outros documentos para ajudar na análise inicial.</p></details>\n      <details><summary>Vocês atendem somente Itumbiara?</summary><p>O atendimento principal é em Itumbiara e região. Serviços em outras cidades podem ser avaliados conforme distância, tipo de trabalho e necessidade de deslocamento.</p></details>\n      <details><summary>Como funciona o orçamento?</summary><p>Primeiro são levantadas as informações principais do serviço. Depois, a MN Engenharia avalia o escopo necessário e apresenta uma proposta com entregas, condições e responsabilidades definidas.</p></details>'''
+          if old_faq in s:
+              s=s.replace(old_faq,new_faq,1)
+
+          # CSS da nova seção
+          css='''\n/* PREVIEW-V26-CONFIANCA */\n.experience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}\n.experience-card{padding:24px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#0b2542,#041326);box-shadow:0 18px 45px rgba(0,0,0,.18)}\n.experience-card b{display:block;color:var(--gold2);font-size:10px;letter-spacing:.12em;margin-bottom:20px}.experience-card strong{display:block;font-size:17px}.experience-card span{display:block;color:var(--muted);font-size:12px;margin-top:7px}\n@media(max-width:980px){.experience-grid{grid-template-columns:1fr 1fr}}\n@media(max-width:650px){.experience-grid{grid-template-columns:1fr}.experience-card{padding:21px}}\n'''
+          if 'PREVIEW-V26-CONFIANCA' not in s:
+              s=s.replace('</style>',css+'</style>',1)
+
+          # Rodapé: link Sobre
+          if '>Sobre a empresa</a>' not in s:
+              s=s.replace('<a href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener">@mn_engenhariacivil</a> • <a href="#inicio">Voltar ao topo</a>', '<a href="sobre.html">Sobre a empresa</a> • <a href="https://www.instagram.com/mn_engenhariacivil" target="_blank" rel="noopener">@mn_engenhariacivil</a> • <a href="#inicio">Voltar ao topo</a>',1)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Salva atualização
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add teste-v2.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Adiciona Sobre, confiança e FAQ ampliado na prévia'
+          git push origin main
