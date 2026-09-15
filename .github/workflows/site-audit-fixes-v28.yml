@@ -1,0 +1,186 @@
+name: Site audit fixes V28
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/site-audit-fixes-v28.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Corrigir e validar a previa
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+
+          # 1) Padroniza os cache-busters/links antigos na V28.
+          for p in root.glob('*.html'):
+              s = p.read_text(encoding='utf-8')
+              s = re.sub(r'\?v=(?:21|22|23|24|25|26|27)', '?v=28', s)
+
+              # As paginas individuais usavam caminhos absolutos, que quebram
+              # quando a previa e aberta no subdiretorio do GitHub Pages.
+              if p.name in {
+                  'projeto-conceitos-fachadas.html',
+                  'projeto-residencial-integrado.html',
+                  'projeto-casas-urbanas.html',
+              }:
+                  s = s.replace('href="/teste-v2.html', 'href="teste-v2.html')
+                  s = s.replace('src="/assets/', 'src="assets/')
+                  s = s.replace('href="/assets/', 'href="assets/')
+
+              p.write_text(s, encoding='utf-8')
+
+          # 2) Corrige as quebras de linha da mensagem do formulario de contato.
+          contact = Path('contato.html')
+          s = contact.read_text(encoding='utf-8')
+          s, n = re.subn(
+              r"linhas\.join\('\\\s*'\)",
+              lambda _: r"linhas.join('\n')",
+              s,
+          )
+          contact.write_text(s, encoding='utf-8')
+          if n == 0 and r"linhas.join('\n')" not in s:
+              raise SystemExit('Nao foi possivel validar o separador de linhas do formulario de contato.')
+
+          # 3) Menu mobile compartilhado + filtros reais do portfolio.
+          js = Path('assets/site-v27.js')
+          s = js.read_text(encoding='utf-8')
+          marker = 'SITE-V28-AUDIT-FIXES'
+          if marker not in s:
+              s += r'''
+
+// SITE-V28-AUDIT-FIXES
+document.addEventListener('DOMContentLoaded',()=>{
+  // Cria menu mobile nas paginas de servico que ainda nao possuem botao proprio.
+  const navlinks=document.querySelector('.navlinks');
+  if(navlinks){
+    const nav=navlinks.parentElement;
+    if(nav && !nav.querySelector('.menu') && !nav.querySelector('.mn-menu-v28')){
+      const btn=document.createElement('button');
+      btn.type='button';
+      btn.className='mn-menu-v28';
+      btn.setAttribute('aria-label','Abrir menu');
+      btn.setAttribute('aria-expanded','false');
+      btn.textContent='☰';
+      nav.appendChild(btn);
+      btn.addEventListener('click',()=>{
+        const open=navlinks.classList.toggle('open');
+        btn.setAttribute('aria-expanded',String(open));
+      });
+      navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+        navlinks.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+      }));
+    }
+  }
+
+  // Faz os chips do portfolio filtrarem os cards de verdade.
+  const chips=[...document.querySelectorAll('.portfolio-chip')];
+  const cards=[...document.querySelectorAll('.project-card')];
+  if(chips.length && cards.length){
+    const normalize=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    const applyFilter=chip=>{
+      const selected=normalize(chip.textContent.trim());
+      chips.forEach(c=>{
+        const active=c===chip;
+        c.classList.toggle('active',active);
+        c.setAttribute('aria-pressed',String(active));
+      });
+      cards.forEach(card=>{
+        const hay=normalize(card.textContent);
+        const architectural=selected==='arquitetonico' && (hay.includes('arquitetonico')||hay.includes('arquitetura'));
+        const show=selected==='todos' || hay.includes(selected) || architectural;
+        card.hidden=!show;
+      });
+    };
+    chips.forEach(chip=>{
+      chip.setAttribute('role','button');
+      chip.setAttribute('tabindex','0');
+      chip.setAttribute('aria-pressed',String(chip.classList.contains('active')));
+      chip.addEventListener('click',()=>applyFilter(chip));
+      chip.addEventListener('keydown',e=>{
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();applyFilter(chip);}
+      });
+    });
+  }
+});
+'''
+              js.write_text(s, encoding='utf-8')
+
+          css = Path('assets/site-v27.css')
+          s = css.read_text(encoding='utf-8')
+          if marker not in s:
+              s += r'''
+
+/* SITE-V28-AUDIT-FIXES */
+.mn-menu-v28{display:none;background:transparent;color:#fff;border:1px solid rgba(216,184,108,.24);border-radius:11px;padding:8px 11px;font-size:20px;cursor:pointer}
+.portfolio-chip[role="button"]{cursor:pointer;user-select:none}
+.portfolio-chip[role="button"]:focus-visible{outline:2px solid #f5dda1;outline-offset:3px}
+@media(max-width:900px){
+  .nav{position:relative}
+  .mn-menu-v28{display:block}
+  .navlinks.open{display:flex!important;position:absolute;top:100%;left:0;right:0;z-index:120;flex-direction:column;align-items:stretch;gap:12px;padding:18px;background:#06152a;border:1px solid rgba(216,184,108,.24);border-radius:15px;box-shadow:0 18px 45px rgba(0,0,0,.35)}
+  .navlinks.open a{min-height:42px;display:flex;align-items:center}
+}
+'''
+              css.write_text(s, encoding='utf-8')
+
+          # 4) Validacoes locais antes do commit.
+          project_pages = [
+              Path('projeto-conceitos-fachadas.html'),
+              Path('projeto-residencial-integrado.html'),
+              Path('projeto-casas-urbanas.html'),
+          ]
+          for p in project_pages:
+              text=p.read_text(encoding='utf-8')
+              bad=[x for x in ['src="/assets/','href="/assets/','href="/teste-v2.html'] if x in text]
+              if bad:
+                  raise SystemExit(f'{p}: ainda possui caminhos absolutos: {bad}')
+
+          main=Path('teste-v2.html').read_text(encoding='utf-8')
+          for expected in ['portfolio-chip','project-card','quoteForm','orcamento-rapido']:
+              if expected not in main:
+                  raise SystemExit(f'teste-v2.html sem elemento esperado: {expected}')
+
+          for required in ['projetos.html','construcao.html','acompanhamento-de-obras.html','gerenciamento-de-obras.html','vistorias-tecnicas.html','contato.html','sobre.html']:
+              if not Path(required).exists():
+                  raise SystemExit(f'Pagina ausente: {required}')
+
+          print('Auditoria V28: validacoes concluidas com sucesso.')
+          PY
+
+      - name: Remover automacoes antigas e temporarias
+        shell: bash
+        run: |
+          rm -f \
+            .github/workflows/link-projeto-conceitos.yml \
+            .github/workflows/link-projetos-detalhados-v23.yml \
+            .github/workflows/portfolio-quote-v22.yml \
+            .github/workflows/preview-portfolio-orcamento-v2.yml \
+            .github/workflows/preview-portfolio-orcamento.yml \
+            .github/workflows/preview-style-fix.yml \
+            .github/workflows/site-audit-fixes-v28.yml
+
+      - name: Commit das correcoes
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m 'Corrige navegacao, formularios e limpa automacoes antigas'
+          git push origin main
