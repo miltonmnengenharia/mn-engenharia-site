@@ -1,0 +1,94 @@
+name: Apply V27 SEO Footer
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-v27-seo-footer.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Aplica SEO de prévia e rodapé compartilhado
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, html
+
+          pages={
+            'teste-v2.html':('MN Engenharia | Projetos, Obras e Vistorias em Itumbiara - GO','Projetos, construção, acompanhamento, gerenciamento de obras e vistorias técnicas com a MN Engenharia em Itumbiara - GO e região.','https://mnengenharia.com.br/'),
+            'sobre.html':('Sobre a MN Engenharia | Engenharia em Itumbiara - GO','Conheça a MN Engenharia e sua atuação em projetos, construção, acompanhamento, gerenciamento de obras e vistorias técnicas em Itumbiara - GO e região.','https://mnengenharia.com.br/sobre.html'),
+            'projetos.html':('Projetos de Engenharia em Itumbiara - GO | MN Engenharia','Projetos arquitetônicos, estruturais, fundações, instalações e compatibilização para residências e empreendimentos em Itumbiara - GO e região.','https://mnengenharia.com.br/projetos.html'),
+            'construcao.html':('Construção e Execução de Obras em Itumbiara - GO | MN Engenharia','Construção e execução de obras com planejamento, organização de etapas e acompanhamento técnico pela MN Engenharia em Itumbiara - GO e região.','https://mnengenharia.com.br/construcao.html'),
+            'acompanhamento-de-obras.html':('Acompanhamento de Obras em Itumbiara - GO | MN Engenharia','Visitas técnicas e acompanhamento de obras avulso ou periódico em Itumbiara - GO e região, com orientação conforme o escopo contratado.','https://mnengenharia.com.br/acompanhamento-de-obras.html'),
+            'gerenciamento-de-obras.html':('Gerenciamento de Obras em Itumbiara - GO | MN Engenharia','Gerenciamento de obras com planejamento, cronograma, materiais e coordenação operacional conforme o escopo contratado em Itumbiara - GO e região.','https://mnengenharia.com.br/gerenciamento-de-obras.html'),
+            'vistorias-tecnicas.html':('Vistorias Técnicas em Itumbiara - GO | MN Engenharia','Vistorias técnicas e avaliações de imóveis e obras em Itumbiara - GO e região, com análise conforme a necessidade de cada contratação.','https://mnengenharia.com.br/vistorias-tecnicas.html'),
+            'projeto-conceitos-fachadas.html':('Conceitos de Fachadas | Portfólio MN Engenharia','Estudo conceitual de fachadas residenciais apresentado no portfólio da MN Engenharia.','https://mnengenharia.com.br/projeto-conceitos-fachadas.html'),
+            'projeto-residencial-integrado.html':('Projeto Residencial Integrado | Portfólio MN Engenharia','Estudo conceitual residencial integrado apresentado no portfólio da MN Engenharia.','https://mnengenharia.com.br/projeto-residencial-integrado.html'),
+            'projeto-casas-urbanas.html':('Casas Urbanas | Portfólio MN Engenharia','Estudo conceitual de casas urbanas apresentado no portfólio da MN Engenharia.','https://mnengenharia.com.br/projeto-casas-urbanas.html'),
+            'contato.html':('Contato e Orçamento | MN Engenharia em Itumbiara - GO','Solicite orçamento com a MN Engenharia para projetos, construção, acompanhamento, gerenciamento de obras e vistorias técnicas em Itumbiara - GO e região.','https://mnengenharia.com.br/contato.html')
+          }
+
+          jsonld='''<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"MN Engenharia","url":"https://mnengenharia.com.br/","logo":"https://mnengenharia.com.br/assets/logo.webp","telephone":"+55 64 99319-1135","email":"milton@mnengenharia.com.br","areaServed":"Itumbiara - GO e região","sameAs":["https://www.instagram.com/mn_engenhariacivil"]}</script>'''
+
+          for filename,(title,desc,canonical) in pages.items():
+            p=Path(filename)
+            if not p.exists():
+              continue
+            s=p.read_text(encoding='utf-8')
+            title_e=html.escape(title,quote=True)
+            desc_e=html.escape(desc,quote=True)
+
+            if re.search(r'<title>.*?</title>',s,re.I|re.S):
+              s=re.sub(r'<title>.*?</title>',f'<title>{title_e}</title>',s,count=1,flags=re.I|re.S)
+            else:
+              s=s.replace('</head>',f'<title>{title_e}</title>\n</head>',1)
+
+            meta_desc=f'<meta name="description" content="{desc_e}">'
+            if re.search(r'<meta[^>]+name=["\']description["\'][^>]*>',s,re.I):
+              s=re.sub(r'<meta[^>]+name=["\']description["\'][^>]*>',meta_desc,s,count=1,flags=re.I)
+            else:
+              s=s.replace('</title>',f'</title>\n{meta_desc}',1)
+
+            robots='<meta name="robots" content="noindex,nofollow">'
+            if re.search(r'<meta[^>]+name=["\']robots["\'][^>]*>',s,re.I):
+              s=re.sub(r'<meta[^>]+name=["\']robots["\'][^>]*>',robots,s,count=1,flags=re.I)
+            else:
+              s=s.replace(meta_desc,meta_desc+'\n'+robots,1)
+
+            canon=f'<link rel="canonical" href="{canonical}">'
+            if re.search(r'<link[^>]+rel=["\']canonical["\'][^>]*>',s,re.I):
+              s=re.sub(r'<link[^>]+rel=["\']canonical["\'][^>]*>',canon,s,count=1,flags=re.I)
+            else:
+              s=s.replace(robots,robots+'\n'+canon,1)
+
+            if 'property="og:title"' not in s:
+              og=(f'<meta property="og:title" content="{title_e}">\n'
+                  f'<meta property="og:description" content="{desc_e}">\n'
+                  '<meta property="og:type" content="website">\n'
+                  '<meta property="og:image" content="https://mnengenharia.com.br/assets/logo.webp">')
+              s=s.replace(canon,canon+'\n'+og,1)
+
+            if 'site-v27.css' not in s:
+              s=s.replace('</head>','<link rel="stylesheet" href="assets/site-v27.css">\n</head>',1)
+            if 'site-v27.js' not in s:
+              s=s.replace('</head>','<script src="assets/site-v27.js" defer></script>\n</head>',1)
+            if 'application/ld+json' not in s:
+              s=s.replace('</head>',jsonld+'\n</head>',1)
+
+            p.write_text(s,encoding='utf-8')
+          PY
+      - name: Salva atualização
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add teste-v2.html sobre.html projetos.html construcao.html acompanhamento-de-obras.html gerenciamento-de-obras.html vistorias-tecnicas.html projeto-conceitos-fachadas.html projeto-residencial-integrado.html projeto-casas-urbanas.html contato.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Padroniza rodapé e prepara SEO local na prévia V27'
+          git push origin main
