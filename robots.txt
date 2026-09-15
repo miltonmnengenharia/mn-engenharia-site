@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /MN_Engenharia_GitHub_Pages_PRONTO/
+Disallow: /scripts/
+Disallow: /SITE_OFICIAL.md
+Disallow: /VERSAO_DEFINITIVA.md
+Disallow: /preview-v21-refresh.txt
 
 Sitemap: https://mnengenharia.com.br/sitemap.xml
