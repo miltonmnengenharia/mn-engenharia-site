@@ -447,7 +447,8 @@ if(quoteForm){
       'Posso enviar fotos ou plantas pelo WhatsApp, se necessário.'
     ].join('
 ');
-    window.open('https://wa.me/5564993191135?text='+encodeURIComponent(msg),'_blank','noopener');
+    const whatsappUrl='https://wa.me/5564993191135?text='+encodeURIComponent(msg);
+    window.location.href=whatsappUrl;
   });
 }
 </script>
